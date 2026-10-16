@@ -52,7 +52,7 @@ Para consultar MLflow local:
 
 Configurar en `.env` las tres variables de conexión indicadas en `.env.example` y seleccionar `MLFLOW_BACKEND=dagshub`. No subir este archivo ni compartir tokens en mensajes. Si falta autenticación, el backend remoto falla explícitamente; no se declara conectado por tener una URL pública.
 
-Se encontró y reutilizó la configuración local de la V2: el acceso de lectura a DagsHub fue comprobado. Los resultados de entrenamiento siguen únicamente en MLflow local: la revisión automática rechazó la subida por requerir autorización explícita para exportar modelo y evidencias. GitHub remoto también sigue pendiente; no se encontró una sesión guardada.
+Se reutilizó la configuración local de la V2 y, con autorización explícita del usuario, se publicó el baseline en el experimento independiente `fraud-baseline-temporal`. Se verificaron el run principal finalizado, los seis runs hijos y los artefactos del modelo. [Ver el run de baseline en DagsHub](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/1/runs/00303d2bd7304de6868196341eff688d). GitHub remoto sigue pendiente; no se encontró una sesión guardada.
 
 ## Baseline temporal
 
@@ -65,7 +65,7 @@ El CLI reutiliza la evidencia si coinciden hashes y parámetros. Compara DummyCl
 
 En validación combinada: 1.646 fraudes detectados, 5 omitidos y 735 falsas alarmas, con umbral fijo 0,5. Son resultados del baseline en development, no resultados finales. Su contrato utiliza saldos posteriores a la transacción; no implica prevención ni desempeño en datos reales.
 
-La publicación remota está implementada en `src/fraud/publish_baseline.py` pero no ejecutada: requiere autorizar la exportación de métricas, modelo y artefactos a un experimento separado en el DagsHub existente. No se subirá el CSV completo ni el archivo `.env`.
+La publicación remota está implementada y ejecutada en `src/fraud/publish_baseline.py`: modelo baseline con un ejemplo de ocho filas, código y evidencias. No se publicó el CSV completo ni el archivo `.env`. Los identificadores y verificaciones están en `reports/baseline/remote_tracking.json`. No se modificaron los experimentos de aprobación crediticia y el baseline no está registrado como champion productivo.
 
 ## Documentación y evidencia
 

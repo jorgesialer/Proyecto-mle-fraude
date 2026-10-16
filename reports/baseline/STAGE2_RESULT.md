@@ -29,7 +29,7 @@ El contrato posterior a transacción incluye saldos finales y discrepancias. En 
 
 ## Conexión remota
 
-Se reutilizó la configuración de DagsHub de la V2 en el .env local, excluido de Git. El acceso de lectura se comprobó. La revisión automática rechazó la exportación del modelo y las evidencias por requerir autorización explícita. Por tanto, no se ha publicado el baseline ni creado el experimento remoto de fraude. `remote_tracking.json`, cuando exista, contendrá el identificador y enlace del run remoto verificado. Los experimentos de aprobación hipotecaria no se modifican.
+Se reutilizó la configuración de DagsHub de la V2 en el .env local, excluido de Git. Tras la autorización explícita del usuario se publicó el modelo y sus evidencias en el experimento separado `fraud-baseline-temporal` (id 1). [Run remoto verificado](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/1/runs/00303d2bd7304de6868196341eff688d), estado FINISHED. Los seis runs hijos están finalizados; las métricas remotas coinciden con las locales y el modelo descargado tiene el mismo hash que el original. `remote_tracking.json` conserva los identificadores y comprobaciones. Los experimentos de aprobación hipotecaria no se modifican. No se enviaron el CSV completo ni credenciales.
 
 Se completaron diez pruebas automatizadas. El segundo notebook se ejecutó sin errores y se exportó como `02_entrenamiento.html`. La figura PR/matriz de confusión se revisó visualmente.
 
