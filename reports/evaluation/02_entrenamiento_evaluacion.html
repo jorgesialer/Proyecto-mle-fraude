@@ -7802,8 +7802,8 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="02.-Entrenamiento,-optimizaci%C3%B3n-y-evaluaci%C3%B3n-offline">02. Entrenamiento, optimización y evaluación offline<a class="anchor-link" href="#02.-Entrenamiento,-optimizaci%C3%B3n-y-evaluaci%C3%B3n-offline">¶</a></h1><p><strong>Etapa 2 del proyecto MLE III.</strong> Establecemos una referencia reproducible antes de optimizar. Se comparan un predictor trivial y un árbol de decisión con configuración fijada de antemano.</p>
-<p>Solo se utilizan los steps <strong>1–250</strong>. Los bloques de ajuste del umbral, prueba offline y producción permanecen reservados. Este notebook no presenta todavía un champion ni los resultados de Random Search/Optuna.</p>
+<h1 id="02.-Entrenamiento-y-evaluaci%C3%B3n">02. Entrenamiento y evaluación<a class="anchor-link" href="#02.-Entrenamiento-y-evaluaci%C3%B3n">¶</a></h1><p>Empecé con un modelo simple para tener una referencia y luego comparé Random Search con TPE para ajustar XGBoost. Usé los mismos datos, espacio de búsqueda y número de intentos en ambos métodos.</p>
+<p>La búsqueda utiliza los steps 1–250. Después elegí el umbral en 251–300 y evalué el modelo final en 301–400. Mantuve separados esos bloques para no elegir el modelo con los mismos datos usados para reportar su resultado final.</p>
 </div>
 </div>
 </div>
@@ -8513,7 +8513,7 @@ Filas de validación fuera de muestra: 2188776
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput celltag_stage3" data-mime-type="text/markdown">
-<h2 id="6.-Protocolo-de-optimizaci%C3%B3n">6. Protocolo de optimización<a class="anchor-link" href="#6.-Protocolo-de-optimizaci%C3%B3n">¶</a></h2><p>Se comparan <strong>Random Search</strong> y <strong>TPE</strong> sobre XGBoost. Ambos usan Optuna como motor: RandomSampler genera configuraciones aleatorias, TPESampler utiliza resultados anteriores tras cuatro trials iniciales aleatorios. No se afirma haber usado RandomizedSearchCV.</p>
+<h2 id="6.-Protocolo-de-optimizaci%C3%B3n">6. Protocolo de optimización<a class="anchor-link" href="#6.-Protocolo-de-optimizaci%C3%B3n">¶</a></h2><p>Se comparan <strong>Random Search</strong> y <strong>TPE</strong> sobre XGBoost. Ambos usan Optuna como motor: RandomSampler genera configuraciones aleatorias, TPESampler utiliza resultados anteriores tras cuatro trials iniciales aleatorios. Random Search se implementó con RandomSampler de Optuna.</p>
 <p>Diez configuraciones por método, tres ventanas cada una: <strong>60 ajustes</strong>, con la misma semilla, espacio, población y cuatro hilos. No hay pruning ni early stopping. Son búsquedas acotadas con una semilla, no una prueba de superioridad universal.</p>
 <p>El encoder categórico es contractual y no aprende estadísticas. Conserva NaN para el manejo nativo de XGBoost y reduce la matriz a float32. <code>scale_pos_weight=sqrt(n_neg/n_pos)</code> se calcula solo en entrenamiento de cada fold. Ambos métodos reciben exactamente la misma transformación.</p>
 <p>Protocolo completo: <code>docs/SEARCH_PROTOCOL.md</code>. La métrica objetivo es la media no ponderada de AP temporal. Se comparan calidad y tiempo real.</p>
@@ -9418,7 +9418,7 @@ Filas de validación fuera de muestra: 2188776
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput celltag_stage3" data-mime-type="text/markdown">
-<h2 id="10.-Selecci%C3%B3n-completada">10. Selección completada<a class="anchor-link" href="#10.-Selecci%C3%B3n-completada">¶</a></h2><p>La búsqueda eligió una configuración dentro del presupuesto acordado, sin abrir el test offline. Las secciones siguientes documentan el ajuste de umbral en su propio bloque y la evaluación final con la política congelada. Los resultados completos de selección están en <code>reports/optimization/STAGE3_RESULT.md</code>.</p>
+<h2 id="10.-Selecci%C3%B3n-completada">10. Selección completada<a class="anchor-link" href="#10.-Selecci%C3%B3n-completada">¶</a></h2><p>La búsqueda eligió una configuración dentro del presupuesto acordado, sin abrir el test offline. Las secciones siguientes documentan el ajuste de umbral en su propio bloque y la evaluación final con la política congelada. La tabla anterior y los experimentos de MLflow reúnen los resultados de la búsqueda.</p>
 </div>
 </div>
 </div>
@@ -9874,8 +9874,8 @@ Filas de validación fuera de muestra: 2188776
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput celltag_stage4" data-mime-type="text/markdown">
-<h2 id="15.-Conclusiones">15. Conclusiones<a class="anchor-link" href="#15.-Conclusiones">¶</a></h2><p>Se completaron baseline, comparación de búsquedas, ajuste del candidato, selección de umbral y evaluación offline independiente. Las métricas finales y su alcance están en <code>reports/evaluation/EVALUATION_RESULT.md</code> y la ficha <code>model-card.md</code>.</p>
-<p>No se deduce causalidad ni ausencia de sobreajuste a partir de estas cifras altas. La evaluación de datos reales, equidad demográfica y desempeño online real no está acreditada por este dataset simulado. La siguiente etapa desarrollará interpretabilidad global/local y después monitoreo de producción simulada con este modelo y esta política.</p>
+<h2 id="15.-Conclusiones">15. Conclusiones<a class="anchor-link" href="#15.-Conclusiones">¶</a></h2><p>Se completaron baseline, comparación de búsquedas, ajuste del candidato, selección de umbral y evaluación offline independiente. Las métricas finales están en las tablas anteriores y se resumen en <code>model-card.md</code>.</p>
+<p>No se deduce causalidad ni ausencia de sobreajuste a partir de estas cifras altas. La evaluación de datos reales, equidad demográfica y desempeño online real no está acreditada por este dataset simulado. Los notebooks 03 y 04 continúan con la interpretación y el monitoreo de este modelo.</p>
 </div>
 </div>
 </div>

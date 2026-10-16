@@ -7802,8 +7802,8 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="04.-Monitoreo-de-producci%C3%B3n-simulada">04. Monitoreo de producción simulada<a class="anchor-link" href="#04.-Monitoreo-de-producci%C3%B3n-simulada">¶</a></h1><p>Replay cronológico de <strong>todas</strong> las transacciones desde step 401 hasta el máximo observado 743. No se ajusta modelo ni umbral. Referencia de drift: muestra uniforme fija de 50.000 filas de steps 301–400. Se monitorean ventanas de 50 steps; la última es parcial.</p>
-<p>Las etiquetas de PaySim están disponibles históricamente. Las métricas supervisadas simulan un proceso con verdad confirmada; en un servicio real dependen del retraso de investigación. No hay tráfico real ni despliegue online.</p>
+<h1 id="04.-Monitoreo">04. Monitoreo<a class="anchor-link" href="#04.-Monitoreo">¶</a></h1><p>En esta parte aplico el modelo a las transacciones de los steps 401–743, en orden temporal. Revisé el desempeño, la calidad de los datos y los cambios en la distribución de las variables.</p>
+<p>Agrupé las operaciones en ventanas de 50 steps y mantuve el mismo modelo y umbral durante todo el recorrido. Para comparar distribuciones tomé una muestra fija de 50.000 transacciones de los steps 301–400. Como PaySim ya contiene las etiquetas, puedo calcular las métricas de cada ventana; en una aplicación real habría que esperar la confirmación del fraude.</p>
 </div>
 </div>
 </div>
