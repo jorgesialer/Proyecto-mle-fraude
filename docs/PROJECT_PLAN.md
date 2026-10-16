@@ -2,7 +2,7 @@
 
 | Bloque | Peso | Evidencia y estado |
 | --- | --- | --- |
-| Repositorio | 10 % | Repo independiente creado; main/development locales, PR y release al publicar |
+| Repositorio | 10 % | [Repo independiente](https://github.com/jorgesialer/Proyecto-mle-fraude), main/development publicados, [PR #1 integrada](https://github.com/jorgesialer/Proyecto-mle-fraude/pull/1); entrega 1.0.0 |
 | Optimización e interpretación | 50 % | Baseline, Random Search/TPE, 20 trials/60 folds, modelo congelado, MLflow, SHAP global/local, permutación, PDP/ICE; completo |
 | Monitoreo | 30 % | Replay 401–743, calidad, PSI/KS, ADWIN, política, app Streamlit, HTML Evidently y notebook; completo localmente |
 | Documentación | 10 % | README, diccionario, protocolos, ficha del modelo, conclusiones y cuatro notebooks ejecutados |

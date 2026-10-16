@@ -32,5 +32,9 @@
     "exceptions": 0
   },
   "model_and_policy_frozen": true,
-  "github_pr_release_verified": false
+  "github_pr_merged_verified": true,
+  "github_pr_url": "https://github.com/jorgesialer/Proyecto-mle-fraude/pull/1",
+  "github_merge_commit": "09ead8d498b8906c181855fba7f6c7663d844796",
+  "release_target": "1.0.0",
+  "verification_scope": "technical verification and merged PR; release verified separately after publication"
 }

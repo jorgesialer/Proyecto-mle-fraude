@@ -28,7 +28,7 @@ En producción histórica (575.590 filas): TP=3.715, FN=21, FP=7, TN=571.847; pr
 
 ## Trazabilidad
 
-Hash del candidato: `7733ec68318a19269286f2a543801230d0a44cd021ff62b589c4a9d5661f316e`. Hash de la política: `5f1eb9b9b77b1b15fa15a69a8cd659a1f71d7c16f81914586f5dffab36285d37`. Hash del modelo de decisión: `861c70da70553195a55ba6f4e044b261b39767cc07dd1d0fd1142c62f066d1db`. Evidencia en `reports/evaluation/`, run MLflow local `de732b2a5a23477ba0d67dccb89ef67b`. El artefacto se puede cargar desde `artifacts/evaluation/decision_model.joblib` en el entorno reproducible del proyecto. La publicación de una release y el despliegue de la aplicación siguen pendientes.
+Hash del candidato: `7733ec68318a19269286f2a543801230d0a44cd021ff62b589c4a9d5661f316e`. Hash de la política: `5f1eb9b9b77b1b15fa15a69a8cd659a1f71d7c16f81914586f5dffab36285d37`. Hash del modelo de decisión: `861c70da70553195a55ba6f4e044b261b39767cc07dd1d0fd1142c62f066d1db`. Evidencia en `reports/evaluation/`, run MLflow local `de732b2a5a23477ba0d67dccb89ef67b`. El artefacto se puede cargar desde `artifacts/evaluation/decision_model.joblib` en el entorno reproducible del proyecto. Entrega versionada: [1.0.0](https://github.com/jorgesialer/Proyecto-mle-fraude/releases/tag/1.0.0). La aplicación se ejecuta localmente; no existe despliegue de tráfico real.
 
 ## Publicación verificada
 
