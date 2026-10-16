@@ -1,4 +1,12 @@
-# 1.0.0 — Proyecto final MLE III
+# Versiones del proyecto
+
+## 1.0.1 — Presentación y evidencias
+
+Simplifiqué la estructura visible de la entrega y reuní las dependencias en `requirements.txt`. Los reportes de avance y los detalles por intento se conservaron localmente y en MLflow. La documentación utiliza una redacción más directa y la referencia del dataset apunta a Kaggle.
+
+Añadí cinco capturas reales del panel y de MLflow, además de los gráficos de evaluación y SHAP. Los cuatro notebooks conservan su código y sus resultados. No se volvió a entrenar el modelo ni se cambiaron las métricas.
+
+## 1.0.0 — Primera entrega
 
 Detección de fraude posterior a transacción sobre PaySim, con evaluación temporal independiente y monitoreo histórico completo.
 

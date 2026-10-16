@@ -1,129 +1,135 @@
-# Detección de fraude y monitoreo temporal
+# Detección de fraude en transacciones con PaySim
 
-Proyecto final de Machine Learning Engineering III: clasificar `isFraud` en PaySim, comparar optimización temporal, explicar el modelo y monitorear producción histórica simulada. Proyecto independiente; la V2 de aprobación crediticia se conserva intacta.
+Proyecto final del curso Machine Learning Engineering III.
 
-**Estado técnico:** cuatro notebooks ejecutados, modelo y umbral congelados, interpretabilidad, replay completo, aplicación Streamlit y reportes HTML. Baseline, optimización, evaluación, explicaciones y monitoreo publicados y verificados en DagsHub. Modelo final registrado, versión 1, estado READY, etapa Production para el replay educativo. No hay tráfico real ni servicio desplegado.
+[Entrega actual: 1.0.1](https://github.com/jorgesialer/Proyecto-mle-fraude/releases/tag/1.0.1) · [Capturas de evidencia](docs/EVIDENCIAS.md)
 
-## Flujo y división temporal
+El objetivo es identificar transacciones fraudulentas y revisar si el modelo mantiene su desempeño cuando recibe datos de periodos posteriores. Para ello trabajé con PaySim, comparé dos métodos de optimización, interpreté el modelo elegido y preparé un panel de monitoreo.
+
+## Datos y problema
+
+El archivo contiene **6.362.620 transacciones**, de las cuales **8.213 son fraudes**. Es un problema de clasificación con un fuerte desbalance de clases. El dataset está disponible en [Kaggle](https://www.kaggle.com/datasets/charlesbeauchamp/ps-20174392719-1491204439457-logcsv); el [diccionario de datos](docs/DATA_DICTIONARY.md) describe las columnas y las variables que preparé.
+
+Usé los saldos anteriores y posteriores a la operación, por lo que el modelo analiza transacciones que ya fueron registradas. No utilicé `isFlaggedFraud`, los identificadores ni la etiqueta como predictores.
+
+## Cómo desarrollé el proyecto
 
 ```mermaid
 flowchart LR
- A[CSV PaySim] --> B[Contrato y features]
- B --> C[1–250: baseline y búsquedas]
- C --> D[251–300: umbral por F2]
- D --> E[301–400: evaluación offline]
- E --> F[Modelo y umbral congelados]
- F --> G[401–743: replay y monitoreo]
- E --> H[TreeSHAP, permutación, PDP e ICE]
- G --> I[App, HTML y alertas]
+ A[Datos PaySim] --> B[Revisión y preparación]
+ B --> C[Baseline]
+ C --> D[Random Search y TPE]
+ D --> E[Selección del umbral]
+ E --> F[Evaluación final]
+ F --> G[Interpretación del modelo]
+ F --> H[Monitoreo de datos posteriores]
 ```
 
-El dataset indicado por la consigna tiene 6.362.620 filas y 8.213 fraudes. Se conserva completo, sin SMOTE ni submuestreo para entrenar o evaluar. Solo las explicaciones y el reporte de distribuciones usan muestras explícitas. El límite 400/401 proviene de la consigna; los cortes internos son decisiones de validación.
+Respeté el corte temporal indicado en la consigna: referencia hasta el step 400 y producción desde 401. Dentro del primer bloque separé los datos para elegir el modelo, ajustar el umbral y evaluar el resultado final.
 
-| Bloque | Steps | Filas | Fraudes | Uso |
-| --- | --- | ---: | ---: | --- |
-| Desarrollo | 1–250 | 3.248.292 | 2.841 | Entrenamiento y tres folds temporales |
-| Validación de umbral | 251–300 | 825.358 | 560 | Máximo F2, empate a mayor umbral |
-| Prueba offline | 301–400 | 1.713.380 | 1.076 | Evaluación final independiente |
-| Producción histórica | 401–743 | 575.590 | 3.736 | Replay sin ajustes |
+| Uso | Steps | Transacciones | Fraudes |
+| --- | --- | ---: | ---: |
+| Entrenamiento y búsqueda | 1–250 | 3.248.292 | 2.841 |
+| Ajuste del umbral | 251–300 | 825.358 | 560 |
+| Evaluación offline | 301–400 | 1.713.380 | 1.076 |
+| Monitoreo de producción simulada | 401–743 | 575.590 | 3.736 |
 
-Momento de detección: **después de registrar la transacción**, porque se utilizan saldos finales. No se acredita prevención antes de autorizarla. Se excluyen target, regla `isFlaggedFraud`, identificadores, row_id y step de los trece predictores. Ver [diccionario](docs/DATA_DICTIONARY.md) y [ficha del modelo](model-card.md).
+### Entrenamiento y optimización
 
-## Reproducir
+Primero comparé un predictor simple (`DummyClassifier`) con un árbol de decisión. Después ajusté XGBoost con **Random Search** y **TPE**, implementados en Optuna. Probé diez configuraciones por método y tres ventanas temporales por configuración: 60 entrenamientos en total.
 
-Usar Python 3.12 y ejecutar desde la raíz:
+| Método | Mejor AP media de validación | Tiempo de búsqueda |
+| --- | ---: | ---: |
+| Árbol de referencia | 0,994281 | Ver notebook 02 |
+| Random Search | 0,997795 | 6,97 minutos |
+| TPE | 0,997233 | 8,99 minutos |
+
+En esta comparación, Random Search obtuvo el mejor resultado. Elegí un XGBoost de 90 árboles y profundidad 3. Luego seleccioné el umbral **0,974192** con F2 en su bloque de validación. F2 da más importancia a detectar los fraudes, aunque también considera las falsas alarmas. Conservé ese umbral durante la evaluación y el monitoreo.
+
+Los detalles del espacio de búsqueda y de la validación están en el [protocolo de optimización](docs/SEARCH_PROTOCOL.md) y el [protocolo de evaluación](docs/EVALUATION_PROTOCOL.md). El resultado corresponde a esta semilla y a este presupuesto; no permite concluir que Random Search siempre sea mejor que TPE.
+
+### Resultados
+
+| Periodo | AP | Precisión | Recall | F2 | Fraudes detectados | Fraudes omitidos | Falsas alarmas |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Evaluación offline | 0,999269 | 98,53 % | 99,63 % | 0,994065 | 1.072 | 4 | 16 |
+| Producción simulada | 0,999668 | 99,81 % | 99,44 % | 0,995125 | 3.715 | 21 | 7 |
+
+Con el umbral 0,5, F2 resulta ligeramente mayor en la prueba offline. Mantuve el umbral que había elegido antes para no usar el resultado de la prueba como una nueva decisión de ajuste. Los valores de salida del modelo no están calibrados como probabilidades.
+
+![Matriz de confusión y evaluación offline](reports/evaluation/offline_evaluation.png)
+
+### Interpretación
+
+Usé SHAP global y local, importancia por permutación y curvas PDP/ICE. La discrepancia del débito de origen y el saldo final de origen fueron las variables más influyentes. También revisé ejemplos de fraudes detectados, operaciones legítimas y errores del modelo.
+
+![Variables más importantes según SHAP](reports/interpretability/shap_global.png)
+
+Las explicaciones se calcularon con una muestra uniforme de 20.000 transacciones de prueba, que contiene 16 fraudes. Como hay variables relacionadas entre sí, la permutación y las curvas deben interpretarse con cuidado. Los resultados describen el comportamiento del modelo en PaySim; no demuestran causalidad ni garantizan el mismo desempeño con datos bancarios reales.
+
+### Monitoreo
+
+El panel muestra el desempeño, los faltantes, los cambios de distribución y las explicaciones. Usé ventanas de 50 steps y comparé las distribuciones con una muestra fija del periodo de referencia. Para detectar cambios utilicé PSI, KS con corrección BH y ADWIN sobre los errores.
+
+La última ventana presentó alertas de distribución en siete variables. Las métricas no cruzaron los límites de desempeño establecidos y ADWIN no detectó cambios en los errores observados. Además hice una prueba separada con etiquetas alteradas para comprobar que el detector respondiera a un cambio conocido; esos datos no forman parte de las métricas anteriores.
+
+![Panel de monitoreo con las métricas del periodo completo](docs/evidencias/panel_general.jpg)
+
+Las etiquetas ya están disponibles en el dataset, por eso se puede evaluar cada ventana. En una operación real habría que esperar la confirmación del fraude. Las alertas sirven para investigar; no activan un reentrenamiento automático.
+
+## Archivos para revisar
+
+| Carpeta o archivo | Contenido |
+| --- | --- |
+| `notebooks/` | Los cuatro notebooks solicitados: datos, entrenamiento, interpretación y monitoreo |
+| `data/` | Una muestra del CSV e indicaciones para obtener el dataset completo |
+| `app.py` | Aplicación de monitoreo en Streamlit |
+| `src/` | Código que utilizan los notebooks para preparar, entrenar y evaluar |
+| `reports/` | Resultados, gráficos y reportes HTML |
+| `docs/` | Diccionario, métodos, instrucciones y capturas de evidencia |
+| `tests/` | Comprobaciones del código |
+| `requirements.txt` | Librerías necesarias para ejecutar el proyecto |
+
+El código auxiliar evita repetir las mismas funciones en todos los notebooks. Los archivos grandes de datos, modelos y MLflow que se generan en la computadora no se suben a GitHub.
+
+## Cómo abrir el panel
+
+Desde la raíz del proyecto, con Python 3.12:
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements-stage4.txt
-Copy-Item .env.example .env
-# Solo en un clon NUEVO, antes de entrenar desde cero:
-Rename-Item -LiteralPath reports -NewName reports-delivered
-New-Item -ItemType Directory -Path reports
-# Configurar PAYSIM_CSV con la ruta al CSV original y MLFLOW_BACKEND=local.
-.\.venv\Scripts\python.exe -m src.fraud.prepare
-.\.venv\Scripts\python.exe -m src.fraud.baseline
-.\.venv\Scripts\python.exe -m src.fraud.optimize --trials 10 --threads 4
-.\.venv\Scripts\python.exe -m src.fraud.candidate
-.\.venv\Scripts\python.exe -m src.fraud.evaluate
-.\.venv\Scripts\python.exe -m src.fraud.explain
-.\.venv\Scripts\python.exe -m src.fraud.monitor
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m streamlit run app.py
 ```
 
-Los comandos reutilizan evidencias de hashes compatibles y no vuelven a seleccionar con test. Para entrenar desde cero en un clon nuevo, apartar primero los reportes originales como arriba; para consultar la app o continuar una ejecución existente, conservarlos. Ver [guía de reproducción](docs/REPRODUCTION.md). No mezclar resúmenes anteriores con otro modelo. Los tiempos y métricas pueden variar entre entornos. La ejecución original usa semilla 42 y cuatro threads; las versiones están fijadas en requirements y reportadas en `reports/environment-stage4.json` (o en `reports-delivered` al iniciar otra ejecución).
+El panel funciona en local y usa los reportes incluidos. No hace falta volver a entrenar ni configurar credenciales para consultarlo. Para ejecutar todo el análisis desde cero, seguir la [guía de reproducción](docs/REPRODUCTION.md).
 
-El CSV, particiones, modelos binarios y bases locales están ignorados por Git. [Origen de datos y reproducción](data/README.md). Las credenciales se configuran localmente en `.env`; nunca forman parte del repositorio. Para solo consultar la app basta con las evidencias incluidas y Streamlit: no necesita credenciales ni el CSV.
+## Notebooks y reportes
 
-## Optimización y decisión
-
-Dummy y árbol de profundidad 6 forman el baseline. XGBoost se optimiza con **Random Search y TPE de Optuna**, diez configuraciones por método, mismo espacio, semilla y tres folds cronológicos. Los primeros cuatro ensayos coincidentes se ejecutan realmente en cada método. No hay pruning ni early stopping que favorezcan presupuestos distintos. Ver [protocolo](docs/SEARCH_PROTOCOL.md).
-
-| Método | Mejor AP temporal media | Minutos del objetivo |
-| --- | ---: | ---: |
-| Random Search | 0,997795 | 6,97 |
-| TPE | 0,997233 | 8,99 |
-| Árbol baseline | 0,994281 | Ver folds |
-
-Se selecciona XGBoost de Random Search: 90 árboles, profundidad 3. Resultado limitado a esta semilla y presupuesto; no implica superioridad universal. El peso de clase se calcula solo con cada entrenamiento. El candidato se ajusta en 1–250; no se reentrena después de elegir el umbral **0,9741922617** en 251–300. Los scores no están calibrados.
-
-## Resultados del modelo congelado
-
-| Periodo | AP | Precisión | Recall | F2 | TP | FP | FN |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Offline 301–400 | 0,999269 | 98,5294 % | 99,6283 % | 0,994065 | 1.072 | 16 | 4 |
-| Replay 401–743 | 0,999668 | 99,8119 % | 99,4379 % | 0,995125 | 3.715 | 7 | 21 |
-
-En el test offline el umbral 0,5 produce F2 ligeramente mayor; se informa como diagnóstico y se mantiene el elegido previamente. Cambiarlo después de observar ese resultado invalidaría la independencia del test. Los resultados altos son plausibles por las relaciones contables del simulador y no garantizan desempeño real.
-
-## Interpretabilidad
-
-TreeSHAP nativo de XGBoost, global y ocho casos TP/FP/FN/TN, con aditividad y concordancia del score verificadas. Se explica una muestra uniforme offline de 20.000 filas con 16 fraudes. Principales variables: discrepancia del débito de origen, saldo final de origen y condición de comerciante. La permutación usa AP y tres repeticiones; PDP/ICE muestra respuesta del pipeline. Se declaran pocas etiquetas positivas, correlación, combinaciones potencialmente irreales y ausencia de interpretación causal. PaySim no permite certificar equidad demográfica.
-
-## Monitoreo y respuesta
-
-Siete ventanas de 50 steps, última parcial, con volumen, faltantes, ceros, score, desempeño, PSI, KS con corrección BH y ADWIN sobre errores ordenados. Referencia fija de drift: 50.000 filas uniformes de steps 301–400. PSI ≥ 0,2 o KS con efecto ≥ 0,1 y rechazo BH al 5 % genera investigación. Con al menos 30 fraudes, recall < 0,95 o precisión < 0,90 alerta de desempeño. La política se guarda antes de abrir producción.
-
-La última ventana presenta drift en siete columnas y mayor prevalencia. No se cruzan los límites supervisados; ADWIN no emite señales observadas. El escenario controlado separado invierte el 15 % de etiquetas de la segunda mitad y detecta el cambio tras 76 filas. No se presenta esa señal sintética como hallazgo observado. Cambio de distribución o de error no prueba por sí solo concept drift.
-
-Las etiquetas son históricas e inmediatamente accesibles para esta simulación; en operación real hay retrasos. No se reentrena automáticamente. Ante alertas: verificar calidad/etiquetas, segmentar errores, confirmar persistencia y evaluar un challenger temporalmente antes de promoción humana y rollback. La latencia medida excluye I/O e ingeniería; no es un SLA de API.
-
-## Notebooks, app y reportes
-
-| Entrega | Notebook | HTML ejecutado |
+| Tema | Notebook | Reporte HTML |
 | --- | --- | --- |
-| Datos y features | [01](notebooks/01_preprocesamiento.ipynb) | [Preprocesamiento](reports/01_preprocesamiento.html) |
-| Baseline, búsquedas y test | [02](notebooks/02_entrenamiento.ipynb) | [Entrenamiento](reports/evaluation/02_entrenamiento_evaluacion.html) |
-| Interpretabilidad | [03](notebooks/03_interpretabilidad.ipynb) | [Explicaciones](reports/interpretability/03_interpretabilidad.html) |
-| Monitoreo | [04](notebooks/04_monitoreo.ipynb) | [Reporte final](reports/monitoring/04_monitoreo.html) |
+| Preparación | [01](notebooks/01_preprocesamiento.ipynb) | [Ver reporte](reports/01_preprocesamiento.html) |
+| Entrenamiento y evaluación | [02](notebooks/02_entrenamiento.ipynb) | [Ver reporte](reports/evaluation/02_entrenamiento_evaluacion.html) |
+| Interpretación | [03](notebooks/03_interpretabilidad.ipynb) | [Ver reporte](reports/interpretability/03_interpretabilidad.html) |
+| Monitoreo | [04](notebooks/04_monitoreo.ipynb) | [Ver reporte](reports/monitoring/04_monitoreo.html) |
 
-[Reporte Evidently](reports/monitoring/evidently_drift.html) · [app Streamlit](app.py) · [métricas por ventana](reports/monitoring/windows.csv) · [alertas](reports/monitoring/alert_policy.json). GitHub muestra HTML como código: descargar el archivo y abrirlo en el navegador, o usar la descarga desde la app.
+También se incluye el [reporte de Evidently](reports/monitoring/evidently_drift.html). Para ver los HTML, hay que descargarlos y abrirlos en el navegador. Las [capturas de evidencia](docs/EVIDENCIAS.md) permiten revisar los puntos principales directamente desde GitHub.
 
-## MLflow y DagsHub
+## Experimentos y modelo
 
-El host de tracking reutiliza la conexión de V2, con experimentos de fraude separados. No se modifican modelos ni experimentos hipotecarios.
+Los parámetros, métricas y modelos están registrados en MLflow a través de DagsHub:
 
 - [Baseline](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/1/runs/00303d2bd7304de6868196341eff688d).
-- [Random Search](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/2/runs/ee7dfc831ece4bafbe337ac26e16f882).
-- [TPE](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/2/runs/7373d47b615b4ae2a8e037f8238a6653).
-- [Candidato antes del umbral](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/2/runs/c8303ef974ee4a879e4fa6a9594e8c5a).
+- [Random Search](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/2/runs/ee7dfc831ece4bafbe337ac26e16f882) y [TPE](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/2/runs/7373d47b615b4ae2a8e037f8238a6653).
+- [Modelo final y evaluación](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/3/runs/5cc382370d9f41eda4e300af13eb1ba1).
+- [Interpretación](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/3/runs/095cbbaffc5f41c9909c437b98808c33) y [monitoreo](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/3/runs/8718daf1d9734bd68975ea8df3800641).
 
-- [Modelo final y evaluación offline](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/3/runs/5cc382370d9f41eda4e300af13eb1ba1).
-- [Interpretabilidad](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/3/runs/095cbbaffc5f41c9909c437b98808c33).
-- [Monitoreo](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/3/runs/8718daf1d9734bd68975ea8df3800641).
+El modelo registrado es `fraud-paysim-posttransaction`, versión 1. La etapa Production identifica el modelo usado en la simulación; no significa que exista un servicio bancario desplegado. La [ficha del modelo](model-card.md) resume su uso y sus limitaciones.
 
-Modelo registrado: `fraud-paysim-posttransaction`, versión `1`, etapa `Production` (simulación educativa, sin servicio en vivo). URI reproducible: `runs:/5cc382370d9f41eda4e300af13eb1ba1/model`.
+## Conclusiones
 
-Veinte trials, métricas y artefacto del candidato verificados remotamente. La evidencia final está en `reports/final_remote_tracking.json`: hashes del modelo descargado, paridad exacta de scores/decisiones en 1.000 filas, métricas remotas y registro verificados. Los scripts `publish_baseline`, `publish_optimization` y `publish_final` exportan modelos y evidencias, no el dataset completo. Publicar requiere credenciales y autorización del propietario.
+XGBoost mejoró el resultado del árbol de referencia y mantuvo una buena detección de fraudes en los datos posteriores. La interpretación mostró que depende bastante de las relaciones entre los saldos. Esto ayuda a entender sus resultados altos, pero también limita lo que se puede concluir fuera del simulador.
 
-## Validación, rúbrica y entrega
+El monitoreo permitió identificar una ventana con cambios en las variables, aunque el desempeño siguió por encima de los límites establecidos. Ante una situación similar, primero revisaría los datos y los errores antes de decidir si hace falta entrenar otro modelo.
 
-```powershell
-python -m unittest discover -s tests -v
-```
-
-22 pruebas: contrato, exclusión de target/metadata, causalidad temporal, tratamiento del ratio, encoder, pesos, métricas, selección exhaustiva del umbral, modelo congelado, PSI/BH y sensibilidad de ADWIN. Los cuatro notebooks se ejecutan sin errores. La prueba de la app comprueba inicio y selección de ventana. [Plan y rúbrica](docs/PROJECT_PLAN.md) · [conclusiones](docs/CONCLUSIONS.md).
-
-El material revisado para definir el alcance fue la consigna PDF y los notebooks/materiales de los diez ZIP. No se afirma haber transcrito o revisado íntegramente las diez grabaciones MP4. El criterio de la consigna es contenido de referencia, no autorización para enviar correos o modificar cuentas.
-
-GitHub: [repositorio independiente](https://github.com/jorgesialer/Proyecto-mle-fraude), ramas [main](https://github.com/jorgesialer/Proyecto-mle-fraude/tree/main) y [development](https://github.com/jorgesialer/Proyecto-mle-fraude/tree/development). [PR #1 integrada](https://github.com/jorgesialer/Proyecto-mle-fraude/pull/1). Entrega versionada: [1.0.0](https://github.com/jorgesialer/Proyecto-mle-fraude/releases/tag/1.0.0). La entrega por correo requiere que el alumno confirme destinatario y envíe o autorice el mensaje; aquí se prepara el proyecto y sus enlaces.
+Se probaron el código con 22 pruebas y la aplicación con su filtro de periodos. Los cuatro notebooks contienen sus resultados de ejecución. La [estrategia de Git y los entregables](docs/PROJECT_PLAN.md) relacionan el contenido con la consigna.

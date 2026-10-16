@@ -1,14 +1,9 @@
 # Datos
 
-Fuente: dataset entregado para MLE III, también disponible en:
+Usé el archivo `PS_20174392719_1491204439457_log.csv` de PaySim indicado para el proyecto. La fuente pública es [Kaggle](https://www.kaggle.com/datasets/charlesbeauchamp/ps-20174392719-1491204439457-logcsv).
 
-- https://drive.google.com/drive/folders/1pyzE2Fv6_TuxidmJ5gHv6mAFy9nJ-c28
-- https://www.kaggle.com/datasets/charlesbeauchamp/ps-20174392719-1491204439457-logcsv
+El CSV completo pesa aproximadamente 494 MB. Para ejecutar el proyecto, se puede guardar en `data/raw/` o indicar su ruta con `PAYSIM_CSV` en el archivo `.env`.
 
-Colocar el CSV completo en `data/raw/` o configurar `PAYSIM_CSV` en el `.env` local. El original no se altera ni se copia a Git; pesa aproximadamente 494 MB.
+`python -m src.fraud.prepare` genera las cuatro particiones en `data/processed/`. Conservé todas las filas para entrenar y evaluar. Los conteos y el identificador del archivo están en `reports/dataset_profile.json`.
 
-`python -m src.fraud.prepare` genera cuatro Parquet en `data/processed/`. Se conservan todas las filas, sin muestreo o balanceo. El manifiesto en `reports/dataset_profile.json` registra hashes SHA-256 y conteos. Los archivos grandes y `.env` están excluidos de Git.
-
-`sample_illustrative.csv` contiene solo las primeras 50 filas de cada partición, para ilustrar el esquema. Es una muestra no representativa y no se usa para entrenar o evaluar.
-
-La preparación detiene el proceso ante categorías desconocidas, target no binario, nulos originales, steps inválidos o valores monetarios negativos/no finitos. Los NaN del ratio monto/saldo son derivados e intencionales. El alcance de estos controles se documenta en el diccionario.
+Incluí `sample_illustrative.csv` para mostrar las columnas sin tener que descargar el archivo completo. Tiene las primeras 50 filas de cada partición; no representa la distribución del dataset y no se utilizó para entrenar. El CSV completo, los Parquet y las credenciales se mantienen fuera de Git.

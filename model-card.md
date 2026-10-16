@@ -1,35 +1,37 @@
-# Model Card: detección de fraude PaySim
+# Ficha del modelo
 
-## Modelo y uso previsto
+## Objetivo y entrenamiento
 
-XGBoost binario, 90 árboles, profundidad 3, elegido por AP media en validación temporal de desarrollo. Objetivo: isFraud (1=fraude). Caso educativo de clasificación posterior a transacción y reproducción de monitoreo, con revisión de alertas. No se evalúa aprobación crediticia ni riesgo de impago.
+El modelo identifica transacciones fraudulentas en PaySim después de que la operación fue registrada. Usa saldos finales, por lo que sus resultados corresponden a ese momento del análisis.
 
-El modelo de decisión combina el pipeline de features con el umbral 0.9741922617. El contrato de entrada contiene trece predictores preparados, descritos en `docs/DATA_DICTIONARY.md`. `predict` aplica el umbral y `predict_proba` expone scores no calibrados.
+Elegí XGBoost con 90 árboles y profundidad 3 a partir de tres ventanas temporales de validación. Comparé Random Search y TPE con diez configuraciones por método. Entrené en steps 1–250, ajusté el umbral en 251–300, evalué en 301–400 y monitoreé desde 401. No volví a entrenar con los datos reservados.
 
-## Datos y entrenamiento
+El modelo recibe trece predictores preparados, descritos en el [diccionario](docs/DATA_DICTIONARY.md). Excluí la etiqueta, la regla `isFlaggedFraud`, los identificadores y el step. El umbral elegido fue 0,974192; los scores no están calibrados como probabilidades.
 
-Dataset PaySim del curso, 6.362.620 filas. Entrenamiento y búsqueda: steps 1–250; ajuste del umbral: 251–300; test offline: 301–400; producción simulada desde 401. No se reentrenó con validación o test. Se conservaron todas las filas. Se compararon Random Search y TPE con diez configuraciones y tres folds por método.
+## Resultados
 
-Se excluyen target, alerta isFlaggedFraud, identificadores crudos, row_id y step de los predictores. El tipo usa categorías contractuales; valores numéricos float32 y NaN nativo. La ponderación de clase se calcula solo en entrenamiento.
+| Periodo | Precisión | Recall | F2 | TP | FP | FN |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Test offline | 98,53 % | 99,63 % | 0,994065 | 1.072 | 16 | 4 |
+| Producción simulada | 99,81 % | 99,44 % | 0,995125 | 3.715 | 7 | 21 |
 
-## Evaluación final independiente
+El umbral 0,5 obtiene F2 ligeramente mayor en el test offline. Conservé el que había seleccionado para no reajustarlo con el resultado de esa prueba.
 
-Sobre 1,713,380 transacciones de steps 301–400: AP=0.999269, ROC-AUC=1.000000, precision=98.5294%, recall=99.6283%, F2=0.994065. Matriz: TN=1712288, FP=16, FN=4, TP=1072.
+## Interpretación y limitaciones
 
-El umbral 0,5 obtiene F2 algo mayor en ese test; se conserva el umbral elegido previamente para no seleccionar con datos de evaluación. No se presentan estas métricas como desempeño online real.
+SHAP señala como variables principales la discrepancia del débito y el saldo final de origen. Las explicaciones globales usan 20.000 transacciones de prueba, con 16 fraudes. El notebook 03 incluye permutación, PDP/ICE y casos de aciertos y errores.
 
-## Limitaciones y equidad
+PaySim contiene relaciones contables que ayudan a distinguir los fraudes. Un buen resultado aquí no garantiza el mismo comportamiento con datos reales. La correlación entre variables también limita la interpretación de permutaciones y curvas. El dataset no contiene los atributos necesarios para evaluar equidad demográfica.
 
-Las relaciones contables del simulador y los saldos finales pueden producir resultados muy altos. No son evidencia de ausencia de sobreajuste, causalidad o desempeño en fraude real. El alto umbral no representa una probabilidad calibrada. Los datos no incluyen atributos demográficos protegidos; no se inventan ni se afirma una auditoría de equidad demográfica. El análisis por tipo o monto debe interpretarse como segmentación, no como prueba de fairness.
+Una ventana presentó cambios de distribución sin cruzar los límites de desempeño definidos. ADWIN no emitió señales sobre los errores observados. La alteración deliberada de etiquetas se hizo en un escenario aparte para comprobar la respuesta del detector.
 
-TreeSHAP global/local, permutación y PDP/ICE completados en una muestra uniforme de 20.000 filas offline (16 fraudes). Las variables principales fueron origin_debit_discrepancy, newbalanceOrig, destination_is_merchant. El error máximo de aditividad fue 4.77e-06. PDP/ICE y permutación pueden crear combinaciones irreales por correlación entre variables originales y derivadas.
+## Registro del modelo
 
-En producción histórica (575.590 filas): TP=3.715, FN=21, FP=7, TN=571.847; precisión=99.8119%, recall=99.4379%, AP=0.999668. Una de siete ventanas presentó drift según la política propia; ninguna cruzó los límites de desempeño. ADWIN no emitió señales observadas. Un escenario separado con etiquetas alteradas permitió verificar sensibilidad (demora de 76 filas); no se mezcló con resultados observados. Cambios de prevalencia o distribuciones no prueban por sí solos concept drift. El modelo no debe actualizarse ni cambiar su umbral usando los resultados reservados como criterio de selección.
+[Modelo y evaluación en DagsHub](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/3/runs/5cc382370d9f41eda4e300af13eb1ba1).
 
-## Trazabilidad
+- Nombre: `fraud-paysim-posttransaction`.
+- Versión 1, estado READY, etapa Production para producción simulada.
+- URI: `runs:/5cc382370d9f41eda4e300af13eb1ba1/model`.
+- Identificadores y comprobaciones: `reports/final_remote_tracking.json`.
 
-Hash del candidato: `7733ec68318a19269286f2a543801230d0a44cd021ff62b589c4a9d5661f316e`. Hash de la política: `5f1eb9b9b77b1b15fa15a69a8cd659a1f71d7c16f81914586f5dffab36285d37`. Hash del modelo de decisión: `861c70da70553195a55ba6f4e044b261b39767cc07dd1d0fd1142c62f066d1db`. Evidencia en `reports/evaluation/`, run MLflow local `de732b2a5a23477ba0d67dccb89ef67b`. El artefacto se puede cargar desde `artifacts/evaluation/decision_model.joblib` en el entorno reproducible del proyecto. Entrega versionada: [1.0.0](https://github.com/jorgesialer/Proyecto-mle-fraude/releases/tag/1.0.0). La aplicación se ejecuta localmente; no existe despliegue de tráfico real.
-
-## Publicación verificada
-
-[Modelo y evaluación final](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/3/runs/5cc382370d9f41eda4e300af13eb1ba1). Registro `fraud-paysim-posttransaction`, versión 1, READY, etapa Production para replay educativo. No hay despliegue en vivo. El modelo MLflow descargado reproduce exactamente scores y decisiones en 1.000 filas; ambos binarios se verificaron por hash. URI: `runs:/5cc382370d9f41eda4e300af13eb1ba1/model`.
+La aplicación se ejecuta localmente.

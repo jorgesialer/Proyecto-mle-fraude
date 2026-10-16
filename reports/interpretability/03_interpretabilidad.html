@@ -7802,8 +7802,8 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="03.-Interpretabilidad-del-modelo-congelado">03. Interpretabilidad del modelo congelado<a class="anchor-link" href="#03.-Interpretabilidad-del-modelo-congelado">¶</a></h1><p>Se explica el XGBoost elegido por validación temporal, entrenado en steps 1–250 y con umbral fijado en 251–300. El test 301–400 se consulta después de cerrar la selección. Estas explicaciones no modifican entrenamiento, configuración ni umbral. No se usan transacciones de producción.</p>
-<p>Métodos trabajados en clase: SHAP global/local, importancia por permutación y PDP/ICE. Se usa TreeSHAP nativo de XGBoost, con contribuciones exactas para árboles y fondo implícito tree-path-dependent; no se afirma utilizar la librería <code>shap</code>.</p>
+<h1 id="03.-Interpretaci%C3%B3n-del-modelo">03. Interpretación del modelo<a class="anchor-link" href="#03.-Interpretaci%C3%B3n-del-modelo">¶</a></h1><p>Después de evaluar el modelo, revisé qué variables influyen en sus predicciones. Usé SHAP para explicar el comportamiento general y casos concretos, importancia por permutación y curvas PDP/ICE.</p>
+<p>Para SHAP utilicé la implementación de XGBoost. Las explicaciones se calcularon en el periodo de prueba 301–400, sin cambiar los parámetros ni el umbral elegidos.</p>
 </div>
 </div>
 </div>

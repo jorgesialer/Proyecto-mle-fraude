@@ -1,4 +1,4 @@
-# Reproducir sin mezclar la entrega y una ejecución nueva
+# Cómo ejecutar el proyecto
 
 El repositorio incluye reportes de la ejecución entregada, pero ignora los datos procesados, modelos binarios y base MLflow local. Los programas no deben reutilizar un resumen de la entrega cuando esos artefactos faltan. Para entrenar desde cero, usar un **clon nuevo** y apartar primero los reportes entregados. No ejecutar estos pasos sobre una carpeta que ya contiene una ejecución que se desea continuar.
 
@@ -9,7 +9,7 @@ if (Test-Path -LiteralPath reports-delivered) { throw 'Ya existe reports-deliver
 Rename-Item -LiteralPath reports -NewName reports-delivered
 New-Item -ItemType Directory -Path reports
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements-stage4.txt
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 Copy-Item .env.example .env
 ```
 
