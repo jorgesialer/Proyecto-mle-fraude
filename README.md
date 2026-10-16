@@ -2,7 +2,7 @@
 
 Proyecto independiente para el curso Machine Learning Engineering III. Objetivo: clasificar `isFraud` en transacciones simuladas PaySim y evaluar estabilidad y desempeño durante una reproducción cronológica de producción.
 
-**Estado: preparación de datos completada y verificada localmente.** Notebook ejecutado (11 celdas de código sin errores), cuatro particiones verificadas y run de preparación MLflow finalizado. No hay todavía un modelo entrenado, benchmark de optimización, aplicación de monitoreo ni release final. Los resultados de aprobación hipotecaria de V2 no se trasladan a este problema.
+**Estado: preparación y baseline temporal completados localmente.** Dos notebooks ejecutados sin errores, cuatro particiones verificadas y evidencia MLflow local. Hay un árbol baseline entrenado sobre development; todavía no hay benchmark de optimización, champion final, aplicación de monitoreo ni release final. Los resultados de aprobación hipotecaria de V2 no se trasladan a este problema.
 
 ## Flujo
 
@@ -52,7 +52,20 @@ Para consultar MLflow local:
 
 Configurar en `.env` las tres variables de conexión indicadas en `.env.example` y seleccionar `MLFLOW_BACKEND=dagshub`. No subir este archivo ni compartir tokens en mensajes. Si falta autenticación, el backend remoto falla explícitamente; no se declara conectado por tener una URL pública.
 
-En esta primera ejecución se usa MLflow local. La publicación en GitHub y la conexión autenticada a DagsHub quedan pendientes hasta disponer de una sesión o configuración local autorizada.
+Se encontró y reutilizó la configuración local de la V2: el acceso de lectura a DagsHub fue comprobado. Los resultados de entrenamiento siguen únicamente en MLflow local: la revisión automática rechazó la subida por requerir autorización explícita para exportar modelo y evidencias. GitHub remoto también sigue pendiente; no se encontró una sesión guardada.
+
+## Baseline temporal
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements-stage2.txt
+.\.venv\Scripts\python.exe -m src.fraud.baseline
+```
+
+El CLI reutiliza la evidencia si coinciden hashes y parámetros. Compara DummyClassifier con un árbol de profundidad 6 en tres ventanas temporales, sin acceder a los bloques de umbral, test offline o producción. Ver [notebook de entrenamiento](notebooks/02_entrenamiento.ipynb) y [resultados](reports/baseline/STAGE2_RESULT.md).
+
+En validación combinada: 1.646 fraudes detectados, 5 omitidos y 735 falsas alarmas, con umbral fijo 0,5. Son resultados del baseline en development, no resultados finales. Su contrato utiliza saldos posteriores a la transacción; no implica prevención ni desempeño en datos reales.
+
+La publicación remota está implementada en `src/fraud/publish_baseline.py` pero no ejecutada: requiere autorizar la exportación de métricas, modelo y artefactos a un experimento separado en el DagsHub existente. No se subirá el CSV completo ni el archivo `.env`.
 
 ## Documentación y evidencia
 
@@ -67,10 +80,10 @@ En esta primera ejecución se usa MLflow local. La publicación en GitHub y la c
 
 ## Desarrollo pendiente
 
-1. Baseline y métricas de clasificación con validación cronológica.
-2. Random Search vs Optuna/TPE con el mismo presupuesto y registro MLflow.
+1. Random Search vs Optuna/TPE con el mismo presupuesto y registro MLflow.
+2. Selección de umbral y evaluación offline final del modelo seleccionado.
 3. SHAP global/local, importancia por permutación y PDP/ICE.
 4. Monitoreo de calidad, data drift, predicciones, desempeño y señales de concept drift; app Streamlit y HTML.
-5. Documentación final, PR integrada y release v1.0.0.
+5. Publicación autorizada de evidencia, documentación final, PR integrada y release v1.0.0.
 
 No se ha acreditado la existencia de ramas remotas, PR, despliegues o enlaces de experimentos nuevos. Se añadirán cuando estén verificados.

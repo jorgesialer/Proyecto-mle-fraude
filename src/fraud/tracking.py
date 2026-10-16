@@ -20,11 +20,11 @@ def configuration_status(root: Path = ROOT) -> dict:
             "remote_connection_verified": False}
 
 
-def configure(root: Path = ROOT):
+def configure(root: Path = ROOT, experiment_name: str | None = None, backend: str | None = None):
     """Adapted from the V2 mlflow_utils pattern, with separate experiment."""
     import mlflow
     status = configuration_status(root)
-    backend = status["backend"]
+    backend = backend or status["backend"]
     if backend == "local":
         database = root / "mlflow.db"
         mlflow.set_tracking_uri(f"sqlite:///{database.as_posix()}")
@@ -34,7 +34,7 @@ def configure(root: Path = ROOT):
         mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
     else:
         raise ValueError("MLFLOW_BACKEND debe ser local o dagshub")
-    name = os.getenv("MLFLOW_EXPERIMENT_NAME", "fraud-data-preparation")
+    name = experiment_name or os.getenv("MLFLOW_EXPERIMENT_NAME", "fraud-data-preparation")
     experiment = mlflow.get_experiment_by_name(name)
     if experiment is None:
         kwargs = {}
