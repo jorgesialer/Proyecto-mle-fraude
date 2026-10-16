@@ -1,0 +1,108 @@
+{
+  "source_filename": "PS_20174392719_1491204439457_log.csv",
+  "source_sha256": "16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b",
+  "source_bytes": 493534783,
+  "rows": 6362620,
+  "frauds": 8213,
+  "source_ordered_by_step": true,
+  "raw_nulls": {
+    "step": 0,
+    "type": 0,
+    "amount": 0,
+    "nameOrig": 0,
+    "oldbalanceOrg": 0,
+    "newbalanceOrig": 0,
+    "nameDest": 0,
+    "oldbalanceDest": 0,
+    "newbalanceDest": 0,
+    "isFraud": 0,
+    "isFlaggedFraud": 0
+  },
+  "raw_zeros": {
+    "amount": 16,
+    "oldbalanceOrg": 2102449,
+    "newbalanceOrig": 3609566,
+    "oldbalanceDest": 2704388,
+    "newbalanceDest": 2439433
+  },
+  "feature_nulls": {
+    "row_id": 0,
+    "type": 0,
+    "amount": 0,
+    "oldbalanceOrg": 0,
+    "newbalanceOrig": 0,
+    "oldbalanceDest": 0,
+    "newbalanceDest": 0,
+    "origin_balance_change": 0,
+    "destination_balance_change": 0,
+    "amount_to_origin_balance": 2102449,
+    "origin_zero_balance": 0,
+    "destination_is_merchant": 0,
+    "origin_debit_discrepancy": 0,
+    "destination_credit_discrepancy": 0,
+    "step": 0,
+    "isFraud": 0
+  },
+  "existing_rule_alerts": 16,
+  "partitions": {
+    "development": {
+      "rows": 3248292,
+      "frauds": 2841,
+      "step_min": 1,
+      "step_max": 250,
+      "fraud_rate": 0.0008746134891813914,
+      "parquet_sha256": "784102dbdf712ea3d27b964e967f5631110bcf453009de92d7d035eb89ecb754"
+    },
+    "threshold_validation": {
+      "rows": 825358,
+      "frauds": 560,
+      "step_min": 251,
+      "step_max": 300,
+      "fraud_rate": 0.0006784934537497668,
+      "parquet_sha256": "249e275c7c8ee4da0f3e32c77347b2cc92ee312124b4b85d5fb5edca45ccd512"
+    },
+    "offline_test": {
+      "rows": 1713380,
+      "frauds": 1076,
+      "step_min": 301,
+      "step_max": 400,
+      "fraud_rate": 0.0006279984591859366,
+      "parquet_sha256": "1e4416f5e13d22ea50eb96765adb8cfa2741364d39b5970645aac6ee8223cf61"
+    },
+    "production": {
+      "rows": 575590,
+      "frauds": 3736,
+      "step_min": 401,
+      "step_max": 743,
+      "fraud_rate": 0.006490731249674247,
+      "parquet_sha256": "460f6230978ed0b8e279f3bcd33de2e3635c426723cc9edfb20cce9138296615"
+    }
+  },
+  "features": [
+    "type",
+    "amount",
+    "oldbalanceOrg",
+    "newbalanceOrig",
+    "oldbalanceDest",
+    "newbalanceDest",
+    "origin_balance_change",
+    "destination_balance_change",
+    "amount_to_origin_balance",
+    "origin_zero_balance",
+    "destination_is_merchant",
+    "origin_debit_discrepancy",
+    "destination_credit_discrepancy"
+  ],
+  "target": "isFraud",
+  "excluded_predictors": [
+    "isFraud",
+    "isFlaggedFraud",
+    "nameOrig",
+    "nameDest",
+    "step",
+    "row_id"
+  ],
+  "prediction_moment": "post_transaction",
+  "sampling": "none; all rows retained",
+  "sample_note": "First 50 rows per partition; illustrative, not representative or used for fitting"
+}
