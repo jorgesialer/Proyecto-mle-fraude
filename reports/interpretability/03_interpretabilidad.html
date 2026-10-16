@@ -7802,8 +7802,8 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="03.-Interpretaci%C3%B3n-del-modelo">03. Interpretación del modelo<a class="anchor-link" href="#03.-Interpretaci%C3%B3n-del-modelo">¶</a></h1><p>Después de evaluar el modelo, revisé qué variables influyen en sus predicciones. Usé SHAP para explicar el comportamiento general y casos concretos, importancia por permutación y curvas PDP/ICE.</p>
-<p>Para SHAP utilicé la implementación de XGBoost. Las explicaciones se calcularon en el periodo de prueba 301–400, sin cambiar los parámetros ni el umbral elegidos.</p>
+<h1 id="03.-Interpretaci%C3%B3n-del-modelo">03. Interpretación del modelo<a class="anchor-link" href="#03.-Interpretaci%C3%B3n-del-modelo">¶</a></h1><p>El módulo de interpretación analiza las variables que influyen en las predicciones mediante SHAP global y local, importancia por permutación y curvas PDP/ICE.</p>
+<p>Las explicaciones utilizan la implementación TreeSHAP de XGBoost y las transacciones del test 301–400. El análisis conserva los parámetros y el umbral seleccionados durante la validación.</p>
 </div>
 </div>
 </div>
@@ -8188,7 +8188,7 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="PDP-e-ICE">PDP e ICE<a class="anchor-link" href="#PDP-e-ICE">¶</a></h2><p>PDP promedia scores de 2.000 filas uniformes de la muestra offline. ICE muestra los 16 fraudes de la muestra y 24 no fraudes, elegidos explícitamente para hacer visibles ambas clases; esa mezcla no representa la prevalencia poblacional. Se recorren cuantiles 1–99 % con 25 puntos y se conserva el resto de variables preparadas.</p>
-<p>Las variables derivadas no se recalculan al perturbar un predictor: este es un diagnóstico de respuesta del pipeline y puede salir de combinaciones físicamente consistentes. La escala vertical symlog permite ver scores pequeños. No interpretar como efecto causal ni probabilidad calibrada.</p>
+<p>Las variables derivadas no se recalculan al perturbar un predictor: este es un diagnóstico de respuesta del pipeline y puede salir de combinaciones físicamente consistentes. La escala vertical symlog permite ver scores pequeños. Interpreta estas curvas como respuestas del modelo, sin atribuir efectos causales ni probabilidades calibradas.</p>
 </div>
 </div>
 </div>

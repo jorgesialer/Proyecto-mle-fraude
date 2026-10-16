@@ -4,9 +4,9 @@
 
 El modelo identifica transacciones fraudulentas en PaySim después de que la operación fue registrada. Usa saldos finales, por lo que sus resultados corresponden a ese momento del análisis.
 
-Elegí XGBoost con 90 árboles y profundidad 3 a partir de tres ventanas temporales de validación. Comparé Random Search y TPE con diez configuraciones por método. Entrené en steps 1–250, ajusté el umbral en 251–300, evalué en 301–400 y monitoreé desde 401. No volví a entrenar con los datos reservados.
+El proceso de selección compara Random Search y TPE con diez configuraciones por método y tres ventanas temporales. La configuración final utiliza XGBoost con 90 árboles y profundidad 3. El modelo entrena en steps 1–250; la validación fija el umbral en 251–300; el test offline evalúa en 301–400 y el monitoreo analiza los datos desde 401. Los bloques reservados no participan en el entrenamiento.
 
-El modelo recibe trece predictores preparados, descritos en el [diccionario](docs/DATA_DICTIONARY.md). Excluí la etiqueta, la regla `isFlaggedFraud`, los identificadores y el step. El umbral elegido fue 0,974192; los scores no están calibrados como probabilidades.
+El modelo recibe trece predictores preparados, descritos en el [diccionario](docs/DATA_DICTIONARY.md). El pipeline excluye la etiqueta, la regla `isFlaggedFraud`, los identificadores y el step. El umbral elegido fue 0,974192; los scores no están calibrados como probabilidades.
 
 ## Resultados
 
@@ -15,7 +15,7 @@ El modelo recibe trece predictores preparados, descritos en el [diccionario](doc
 | Test offline | 98,53 % | 99,63 % | 0,994065 | 1.072 | 16 | 4 |
 | Producción simulada | 99,81 % | 99,44 % | 0,995125 | 3.715 | 7 | 21 |
 
-El umbral 0,5 obtiene F2 ligeramente mayor en el test offline. Conservé el que había seleccionado para no reajustarlo con el resultado de esa prueba.
+El umbral 0,5 obtiene F2 ligeramente mayor en el test offline. El modelo conserva el umbral seleccionado en validación para evitar ajustes con los resultados del test.
 
 ## Interpretación y limitaciones
 

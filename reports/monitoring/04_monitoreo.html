@@ -7802,8 +7802,8 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="04.-Monitoreo">04. Monitoreo<a class="anchor-link" href="#04.-Monitoreo">¶</a></h1><p>En esta parte aplico el modelo a las transacciones de los steps 401–743, en orden temporal. Revisé el desempeño, la calidad de los datos y los cambios en la distribución de las variables.</p>
-<p>Agrupé las operaciones en ventanas de 50 steps y mantuve el mismo modelo y umbral durante todo el recorrido. Para comparar distribuciones tomé una muestra fija de 50.000 transacciones de los steps 301–400. Como PaySim ya contiene las etiquetas, puedo calcular las métricas de cada ventana; en una aplicación real habría que esperar la confirmación del fraude.</p>
+<h1 id="04.-Monitoreo-de-producci%C3%B3n-simulada">04. Monitoreo de producción simulada<a class="anchor-link" href="#04.-Monitoreo-de-producci%C3%B3n-simulada">¶</a></h1><p>El monitoreo aplica el modelo a las transacciones de los steps 401–743 en orden temporal. El panel permite revisar desempeño, calidad de los datos y cambios de distribución.</p>
+<p>El proceso agrupa las operaciones en ventanas de 50 steps y conserva el mismo modelo y umbral. Una muestra fija de 50.000 transacciones de los steps 301–400 funciona como referencia de distribución. PaySim incluye las etiquetas históricas; en una operación real, las métricas supervisadas dependen de la confirmación del fraude.</p>
 </div>
 </div>
 </div>
@@ -8586,7 +8586,7 @@ a.anchor-link {
 <li>Si hay al menos 30 fraudes confirmados en una ventana, alertar con recall &lt; 0,95 o precisión &lt; 0,90. Confirmar etiquetas y retrasos antes de atribuir degradación.</li>
 <li>Si se confirma deterioro, entrenar un challenger con datos posteriores etiquetados y evaluar temporalmente en otro bloque futuro. Revisar recall, precisión, carga de alertas, explicación y calidad; promover con revisión humana y posibilidad de volver al champion.</li>
 </ol>
-<p>En este replay no se ejecutó reentrenamiento ni promoción de challengers. La app permite filtrar periodos, consultar métricas, calidad y drift, revisar SHAP y descargar reportes. Ejecutar desde la raíz: <code>python -m streamlit run app.py</code>.</p>
+<p>En este replay no se ejecutó reentrenamiento ni promoción de challengers. La app permite filtrar periodos, consultar métricas, calidad y drift, revisar SHAP y descargar reportes. Ejecuta desde la raíz: <code>python -m streamlit run app.py</code>.</p>
 <h2 id="Conclusiones">Conclusiones<a class="anchor-link" href="#Conclusiones">¶</a></h2><p>Se mantiene un desempeño alto en PaySim con la política fijada antes del replay. La última ventana registra cambio de distribución y mayor prevalencia, sin cruzar los límites supervisados establecidos; requiere investigación, no una afirmación automática de concept drift. ADWIN no emitió señales en los errores observados y sí respondió al cambio sintético. La validez externa y los retrasos reales de etiquetas siguen siendo limitaciones.</p>
 <p>Reproducción: <code>python -m src.fraud.monitor</code>. Fuentes: <a href="https://docs.evidentlyai.com/docs/library/report">Evidently Report</a>, <a href="https://riverml.xyz/latest/api/drift/ADWIN/">ADWIN River</a>.</p>
 </div>

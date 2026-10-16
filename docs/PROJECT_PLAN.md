@@ -11,7 +11,7 @@ La consigna pide cuatro notebooks, datos, aplicación de monitoreo, reporte HTML
 
 ## Estrategia de Git
 
-Usé `development` para integrar la preparación, el baseline, la optimización y el monitoreo. Esos cambios se pasaron a `main` en la [PR #1](https://github.com/jorgesialer/Proyecto-mle-fraude/pull/1). La release 1.0.0 conserva la primera entrega. Los cambios posteriores de documentación y presentación se registran en otra PR para que sea fácil revisar qué cambió.
+La rama `development` integra la preparación, el baseline, la optimización y el monitoreo. La [PR #1](https://github.com/jorgesialer/Proyecto-mle-fraude/pull/1) incorpora esos cambios a `main`. La release 1.0.0 conserva la primera entrega. Los cambios posteriores de documentación y presentación se registran en otra PR para que sea fácil revisar qué cambió.
 
 ## Qué archivos son de apoyo
 

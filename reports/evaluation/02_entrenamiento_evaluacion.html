@@ -7802,8 +7802,8 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="02.-Entrenamiento-y-evaluaci%C3%B3n">02. Entrenamiento y evaluación<a class="anchor-link" href="#02.-Entrenamiento-y-evaluaci%C3%B3n">¶</a></h1><p>Empecé con un modelo simple para tener una referencia y luego comparé Random Search con TPE para ajustar XGBoost. Usé los mismos datos, espacio de búsqueda y número de intentos en ambos métodos.</p>
-<p>La búsqueda utiliza los steps 1–250. Después elegí el umbral en 251–300 y evalué el modelo final en 301–400. Mantuve separados esos bloques para no elegir el modelo con los mismos datos usados para reportar su resultado final.</p>
+<h1 id="02.-Entrenamiento-y-evaluaci%C3%B3n">02. Entrenamiento y evaluación<a class="anchor-link" href="#02.-Entrenamiento-y-evaluaci%C3%B3n">¶</a></h1><p>Este notebook compara modelos de referencia y optimiza XGBoost mediante Random Search y TPE. Ambos métodos utilizan los mismos datos, espacio de búsqueda y presupuesto de evaluaciones.</p>
+<p>La búsqueda utiliza los steps 1–250; la validación fija el umbral en 251–300 y la prueba offline evalúa en 301–400. Esta separación evita seleccionar el modelo con los datos utilizados para medir su resultado final.</p>
 </div>
 </div>
 </div>

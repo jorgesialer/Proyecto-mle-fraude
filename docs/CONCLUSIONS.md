@@ -7,4 +7,4 @@
 5. ADWIN no detectó cambios en el error observado. Respondió a una alteración deliberada de etiquetas en un escenario separado; esto comprueba sensibilidad, no demuestra drift real ni ausencia del mismo.
 6. Próximos pasos fuera del alcance evaluado: validación con datos reales y etiquetas tardías, calibración con otro bloque futuro si se necesitan probabilidades, análisis de costos, seguimiento por segmentos e infraestructura de servicio. Todo nuevo challenger requiere una evaluación temporal nueva.
 
-No se envió correo de entrega ni se desplegó un servicio de transacciones real.
+La aplicación permite consultar localmente los resultados de la simulación y sus reportes.
