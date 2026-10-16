@@ -3,7 +3,7 @@
 | Bloque | Peso | Entregable | Estado inicial |
 | --- | --- | --- | --- |
 | Repositorio | 10 % | Main, development, PR integrada, release 1.0.0 | Preparación local; remoto y PR pendientes |
-| Técnicas avanzadas | 50 % | Baseline, Random Search vs Optuna/TPE, MLflow y SHAP global/local con PDP/ICE | Baseline temporal y tracking local completos; optimización y XAI pendientes |
+| Técnicas avanzadas | 50 % | Baseline, Random Search vs Optuna/TPE, MLflow y SHAP global/local con PDP/ICE | Baseline publicado; optimización y candidato completos localmente; umbral, test final y XAI pendientes |
 | Monitoreo | 30 % | Calidad, drift, desempeño, alertas, app y reporte HTML | Pendiente |
 | Documentación | 10 % | README, cuatro notebooks, diccionario y conclusiones | Dos notebooks ejecutados y diccionario completos; resto pendiente |
 

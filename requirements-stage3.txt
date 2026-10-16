@@ -1,0 +1,3 @@
+-r requirements-stage2.txt
+optuna==5.0.0
+xgboost==3.4.1

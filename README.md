@@ -2,7 +2,7 @@
 
 Proyecto independiente para el curso Machine Learning Engineering III. Objetivo: clasificar `isFraud` en transacciones simuladas PaySim y evaluar estabilidad y desempeño durante una reproducción cronológica de producción.
 
-**Estado: preparación y baseline temporal completados localmente.** Dos notebooks ejecutados sin errores, cuatro particiones verificadas y evidencia MLflow local. Hay un árbol baseline entrenado sobre development; todavía no hay benchmark de optimización, champion final, aplicación de monitoreo ni release final. Los resultados de aprobación hipotecaria de V2 no se trasladan a este problema.
+**Estado: preparación, baseline y optimización completados localmente.** Dos notebooks ejecutados, cuatro particiones verificadas y evidencia MLflow local. Se compararon veinte configuraciones de XGBoost en sesenta ajustes temporales y se guardó el candidato seleccionado. Todavía no hay umbral optimizado, evaluación offline final, aplicación de monitoreo ni release final. Los resultados de aprobación hipotecaria de V2 no se trasladan a este problema.
 
 ## Flujo
 
@@ -78,9 +78,31 @@ La publicación remota está implementada y ejecutada en `src/fraud/publish_base
 - `reports/01_preprocesamiento.html`: vista ejecutada del primer notebook, cuando se genere. No es el reporte final de monitoreo.
 - `reports/environment-stage1.json`: versiones utilizadas en la ejecución verificada.
 
+## Optimización completada
+
+Random Search (RandomSampler de Optuna) y TPE se compararon con diez configuraciones cada uno, tres folds, mismo espacio y semilla. Se utilizó el encoder sin estadísticas aprendidas y manejo nativo de NaN para ambos. El [protocolo](docs/SEARCH_PROTOCOL.md) explica las decisiones y límites.
+
+| Método | Mejor AP temporal media | Minutos de evaluación del objetivo |
+| --- | ---: | ---: |
+| Random Search | 0,997795 | 6,97 |
+| TPE | 0,997233 | 8,99 |
+| Árbol baseline | 0,994281 | Ver sus métricas por fold |
+
+Se seleccionó XGBoost de Random Search con 90 árboles y profundidad 3. Es un resultado acotado con una semilla, no superioridad universal. El pipeline está ajustado únicamente sobre steps 1–250 y recargado con predicciones idénticas. El bloque del umbral, el test offline y producción siguen reservados.
+
+Ver [resultados de etapa 3](reports/optimization/STAGE3_RESULT.md), el notebook 2 ampliado y su [versión HTML](reports/optimization/02_entrenamiento_optimizacion.html).
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements-stage3.txt
+.\.venv\Scripts\python.exe -m src.fraud.optimize --trials 10 --threads 4
+.\.venv\Scripts\python.exe -m src.fraud.candidate
+```
+
+El baseline ya está publicado en DagsHub. La publicación del nuevo candidato y de los veinte trials fue rechazada por la revisión automática al requerir autorización explícita adicional para ese payload. La etapa 3 está completa localmente; `src/fraud/publish_optimization.py` está preparado y no se ha ejecutado.
+
 ## Desarrollo pendiente
 
-1. Random Search vs Optuna/TPE con el mismo presupuesto y registro MLflow.
+1. Publicación autorizada de los resultados de optimización.
 2. Selección de umbral y evaluación offline final del modelo seleccionado.
 3. SHAP global/local, importancia por permutación y PDP/ICE.
 4. Monitoreo de calidad, data drift, predicciones, desempeño y señales de concept drift; app Streamlit y HTML.
