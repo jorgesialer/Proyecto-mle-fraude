@@ -32,9 +32,9 @@ Dataset PaySim entregado por el profesor, archivo `PS_20174392719_1491204439457_
 | `origin_debit_discrepancy` | origin_balance_change − amount | Interpretar por tipo: CASH_IN aumenta el saldo |
 | `destination_credit_discrepancy` | destination_balance_change − amount | No asumir que un merchant informa sus saldos |
 
-Los NaN generados por el ratio son intencionales. La imputación se ajustará dentro del pipeline de entrenamiento de cada fold. No se ajustan escaladores ni codificadores sobre todo el dataset.
+El ratio genera NaN cuando el saldo de origen es cero. El pipeline del baseline ajusta la imputación exclusivamente con los datos de entrenamiento de cada fold. XGBoost conserva esos NaN y aplica su tratamiento nativo de valores ausentes. El encoder categórico utiliza las cinco categorías del contrato y no aprende estadísticas del conjunto completo.
 
-`row_id` conserva la posición original, de base cero, para trazabilidad y pruebas de unicidad. No es predictor. En cada Parquet se guardan features, `row_id`, `step` y target; estos tres últimos se separarán de X antes de entrenar.
+`row_id` conserva la posición original, de base cero, para trazabilidad y pruebas de unicidad. Cada Parquet contiene predictores, `row_id`, `step` y target. El pipeline excluye los tres últimos de la matriz de entrada al modelo.
 
 ## Particiones congeladas
 

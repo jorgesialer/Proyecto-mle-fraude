@@ -1,22 +1,58 @@
-# Cómo ejecutar el proyecto
+# Instalación, configuración y ejecución
 
-El repositorio incluye reportes de la ejecución entregada, pero ignora los datos procesados, modelos binarios y base MLflow local. Los programas no deben reutilizar un resumen de la entrega cuando esos artefactos faltan. Para entrenar desde cero, usar un **clon nuevo** y apartar primero los reportes entregados. No ejecutar estos pasos sobre una carpeta que ya contiene una ejecución que se desea continuar.
+El proyecto permite consultar los resultados incluidos o ejecutar el análisis completo. La aplicación local lee los reportes sin requerir el CSV ni credenciales.
 
-Desde la raíz de ese clon nuevo, en PowerShell:
+## Consulta los resultados incluidos
+
+1. Clona el repositorio y entra en su carpeta.
+2. Crea un entorno con Python 3.12.
+3. Instala las dependencias y ejecuta el panel.
 
 ```powershell
-if (Test-Path -LiteralPath reports-delivered) { throw 'Ya existe reports-delivered; revisar antes de continuar.' }
-Rename-Item -LiteralPath reports -NewName reports-delivered
-New-Item -ItemType Directory -Path reports
+git clone https://github.com/jorgesialer/Proyecto-mle-fraude.git
+cd Proyecto-mle-fraude
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m streamlit run app.py
+```
+
+Abre la dirección local que indica Streamlit. Selecciona un periodo, consulta las métricas y revisa las pestañas de calidad, explicaciones y reportes. Descarga los HTML para abrirlos como páginas en el navegador. Conserva la carpeta `reports`: contiene los resultados que utiliza el panel.
+
+## Configura una ejecución desde cero
+
+Utiliza un clon nuevo para mantener separadas la entrega original y la nueva ejecución. Aparta sus reportes antes de entrenar; no apliques este paso a una ejecución local que quieras continuar.
+
+```powershell
+if (Test-Path -LiteralPath reports-delivered) { throw 'Ya existe reports-delivered; revisa su contenido antes de continuar.' }
+Rename-Item -LiteralPath reports -NewName reports-delivered
+New-Item -ItemType Directory -Path reports
 Copy-Item .env.example .env
 ```
 
-Los reportes originales quedan conservados en `reports-delivered`. Configurar en `.env` la ruta `PAYSIM_CSV` al CSV completo y `MLFLOW_BACKEND=local`. Después seguir los comandos `prepare`, `baseline`, `optimize`, `candidate`, `evaluate`, `explain` y `monitor` del README. Esta ejecución produce sus propias evidencias y runs locales; no debe publicarse como si fueran los identificadores de la entrega original.
+Configura `PAYSIM_CSV` con la ruta al CSV completo y establece `MLFLOW_BACKEND=local` en `.env`. Mantén las credenciales fuera de Git. El archivo `reports-delivered/environment-stage4.json` contiene las versiones de la ejecución original.
 
-Los nuevos hashes de serialización, identificadores MLflow y tiempos pueden diferir. No se deben copiar hashes antiguos para forzar una coincidencia. Los comandos detectan artefactos incompletos o incompatibles y piden conservarlos antes de repetir, en lugar de sobrescribirlos silenciosamente.
+## Ejecuta el análisis completo
 
-Para **consultar** la entrega, no apartar `reports`: abrir los cuatro notebooks ejecutados y HTML incluidos o ejecutar `python -m streamlit run app.py`. La app solo lee reportes y no necesita CSV ni autenticación. Elegir el kernel de Python del entorno instalado al abrir notebooks en Jupyter/VS Code.
+Ejecuta los módulos desde la raíz y respeta este orden para mantener la separación entre entrenamiento, selección del umbral, evaluación y monitoreo:
 
-Para **continuar** una ejecución local existente, conservar sus `reports`, `artifacts`, `data/processed` y base local correspondientes; no usar la preparación de clon nuevo.
+```powershell
+.\.venv\Scripts\python.exe -m src.fraud.prepare
+.\.venv\Scripts\python.exe -m src.fraud.baseline
+.\.venv\Scripts\python.exe -m src.fraud.optimize --trials 10 --threads 4
+.\.venv\Scripts\python.exe -m src.fraud.candidate
+.\.venv\Scripts\python.exe -m src.fraud.evaluate
+.\.venv\Scripts\python.exe -m src.fraud.explain
+.\.venv\Scripts\python.exe -m src.fraud.monitor
+```
+
+La ejecución genera sus propios artefactos, identificadores MLflow y tiempos. Conserva esos resultados juntos; no mezcles sus resúmenes con modelos de otra ejecución. Los comandos comprueban la compatibilidad de datos y modelos antes de reutilizar resultados.
+
+## Abre los notebooks y ejecuta las pruebas
+
+Selecciona el kernel del entorno instalado en Jupyter o VS Code. Consulta los cuatro notebooks en orden. Sus salidas incluidas permiten revisar la entrega sin ejecutar nuevamente el entrenamiento.
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+```
+
+Para continuar una ejecución existente, conserva sus carpetas `reports`, `artifacts`, `data/processed` y su base MLflow local. Evita el paso de preparación del clon nuevo.

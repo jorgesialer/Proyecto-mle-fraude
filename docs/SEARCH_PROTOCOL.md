@@ -2,7 +2,7 @@
 
 ## Comparación congelada antes de evaluar
 
-Se comparan Random Search y TPE sobre XGBoost con histogramas CPU, usando el mismo motor de evaluación. Random Search se implementa con `optuna.samplers.RandomSampler`; no se presenta como una ejecución de `RandomizedSearchCV`. TPE utiliza `TPESampler`, cuatro trials aleatorios iniciales y después sugerencias guiadas. Es el mismo método de búsqueda aleatoria estudiado en clase, con un motor común para controlar la comparación.
+El módulo de optimización compara Random Search y TPE sobre XGBoost con histogramas CPU y un motor de evaluación común. Random Search utiliza `optuna.samplers.RandomSampler`. TPE utiliza `TPESampler`, comienza con cuatro trials aleatorios y continúa con sugerencias guiadas por los resultados anteriores.
 
 Presupuesto: diez configuraciones por método y tres folds por configuración, sesenta ajustes en total. Sin pruning, early stopping ni selección basada en producción. Misma semilla 42, mismo espacio y límites, cuatro hilos y población completa. Los primeros cuatro trials pueden coincidir porque ambos samplers parten de la misma semilla; se ejecutan realmente para ambos, sin reutilizar resultados ni conceder tiempo gratuito a un método.
 
@@ -10,9 +10,9 @@ Métrica objetivo: media no ponderada de Average Precision entre las tres ventan
 
 ## Transformación y desbalance
 
-El tipo se codifica como one-hot con la lista contractual de cinco categorías. Las columnas numéricas se convierten a float32 para reducir memoria. Este encoder no aprende estadísticas y conserva los NaN del ratio de saldo cero: XGBoost utiliza su tratamiento nativo de valores ausentes. El baseline previo usa imputación; esa diferencia se documenta, pero Random Search y TPE reciben exactamente el mismo encoder y los mismos datos entre sí.
+El encoder representa el tipo mediante one-hot con las cinco categorías del contrato y convierte las columnas numéricas a float32 para reducir memoria. La transformación conserva los NaN del ratio de saldo cero y no aprende estadísticas: XGBoost aplica su tratamiento nativo de valores ausentes. El baseline utiliza imputación. Random Search y TPE comparten exactamente el mismo encoder y los mismos datos.
 
-Se fija `scale_pos_weight = sqrt(n_negativos / n_positivos)` calculado exclusivamente con las etiquetas del entrenamiento de cada fold. No se calculan pesos con validación ni se balancean sus filas. Es una política fijada, no un hiperparámetro seleccionado mirando resultados. Los scores no se consideran probabilidades calibradas.
+Cada fold calcula `scale_pos_weight = sqrt(n_negativos / n_positivos)` exclusivamente con sus etiquetas de entrenamiento. La validación conserva todas sus filas y no participa en el cálculo de pesos. Esta política permanece fija durante la comparación. Los scores no constituyen probabilidades calibradas.
 
 ## Espacio de búsqueda
 
