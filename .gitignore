@@ -10,3 +10,4 @@ artifacts/
 mlflow.db*
 mlartifacts/
 .pytest_cache/
+reports-delivered/

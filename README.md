@@ -37,6 +37,9 @@ Usar Python 3.12 y ejecutar desde la raíz:
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-stage4.txt
 Copy-Item .env.example .env
+# Solo en un clon NUEVO, antes de entrenar desde cero:
+Rename-Item -LiteralPath reports -NewName reports-delivered
+New-Item -ItemType Directory -Path reports
 # Configurar PAYSIM_CSV con la ruta al CSV original y MLFLOW_BACKEND=local.
 .\.venv\Scripts\python.exe -m src.fraud.prepare
 .\.venv\Scripts\python.exe -m src.fraud.baseline
@@ -48,7 +51,7 @@ Copy-Item .env.example .env
 .\.venv\Scripts\python.exe -m streamlit run app.py
 ```
 
-Los comandos reutilizan evidencias de hashes compatibles y no vuelven a seleccionar con test. Para una ejecución completamente nueva, utilizar otro checkout y producir sus propios artefactos; no mezclar resúmenes anteriores con otro modelo. Los tiempos y métricas pueden variar entre entornos. La ejecución original usa semilla 42 y cuatro threads; las versiones están fijadas en requirements y reportadas en `reports/environment-stage4.json`.
+Los comandos reutilizan evidencias de hashes compatibles y no vuelven a seleccionar con test. Para entrenar desde cero en un clon nuevo, apartar primero los reportes originales como arriba; para consultar la app o continuar una ejecución existente, conservarlos. Ver [guía de reproducción](docs/REPRODUCTION.md). No mezclar resúmenes anteriores con otro modelo. Los tiempos y métricas pueden variar entre entornos. La ejecución original usa semilla 42 y cuatro threads; las versiones están fijadas en requirements y reportadas en `reports/environment-stage4.json` (o en `reports-delivered` al iniciar otra ejecución).
 
 El CSV, particiones, modelos binarios y bases locales están ignorados por Git. [Origen de datos y reproducción](data/README.md). Las credenciales se configuran localmente en `.env`; nunca forman parte del repositorio. Para solo consultar la app basta con las evidencias incluidas y Streamlit: no necesita credenciales ni el CSV.
 
