@@ -1,0 +1,4 @@
+-r requirements-stage3.txt
+evidently==0.7.23
+river==0.26.1
+streamlit==1.66.0

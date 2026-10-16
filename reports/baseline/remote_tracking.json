@@ -1,0 +1,17 @@
+{
+  "backend": "dagshub",
+  "experiment_name": "fraud-baseline-temporal",
+  "experiment_id": "1",
+  "run_id": "00303d2bd7304de6868196341eff688d",
+  "source_local_run_id": "fde5ae49c22248ffa6da2c03922729e7",
+  "run_url": "https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/1/runs/00303d2bd7304de6868196341eff688d",
+  "model_uri": "runs:/00303d2bd7304de6868196341eff688d/model",
+  "remote_write_verified": true,
+  "run_status": "FINISHED",
+  "model_artifacts_verified": true,
+  "model_role": "baseline_only",
+  "registry_registration": false,
+  "remote_metrics_verified": true,
+  "finished_child_runs": 6,
+  "downloaded_model_hash_verified": true
+}

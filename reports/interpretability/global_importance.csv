@@ -1,0 +1,14 @@
+feature,mean_abs_shap_log_odds
+origin_debit_discrepancy,1.5709968
+newbalanceOrig,0.95586306
+destination_is_merchant,0.615894
+oldbalanceDest,0.51486444
+amount_to_origin_balance,0.43378463
+type,0.26463574
+origin_balance_change,0.23807737
+destination_balance_change,0.1663374
+amount,0.1573942
+origin_zero_balance,0.103437915
+destination_credit_discrepancy,0.060868945
+newbalanceDest,0.042216334
+oldbalanceOrg,0.029951908

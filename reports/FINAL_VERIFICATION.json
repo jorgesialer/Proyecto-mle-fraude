@@ -1,0 +1,36 @@
+{
+  "credential_scan_passed": true,
+  "ignored_data_models_not_in_git": true,
+  "notebooks": [
+    {
+      "file": "01_preprocesamiento.ipynb",
+      "executed_code_cells": 11,
+      "errors": 0
+    },
+    {
+      "file": "02_entrenamiento.ipynb",
+      "executed_code_cells": 17,
+      "errors": 0
+    },
+    {
+      "file": "03_interpretabilidad.ipynb",
+      "executed_code_cells": 6,
+      "errors": 0
+    },
+    {
+      "file": "04_monitoreo.ipynb",
+      "executed_code_cells": 5,
+      "errors": 0
+    }
+  ],
+  "unit_tests_passed": 22,
+  "production_prediction_metrics_independently_recomputed": true,
+  "partition_ids_disjoint": true,
+  "app_test": {
+    "initial_metrics": 4,
+    "last_window_filter_rows": 11421,
+    "exceptions": 0
+  },
+  "model_and_policy_frozen": true,
+  "github_pr_release_verified": false
+}

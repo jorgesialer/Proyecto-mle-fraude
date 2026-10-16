@@ -1,0 +1,9 @@
+{
+  "run_id": "006f20c88daf4cb0bc76c561d414c77a",
+  "experiment_name": "fraud-data-preparation",
+  "experiment_id": "1",
+  "backend": "local",
+  "remote_connection_verified": false,
+  "stage": "data_preparation",
+  "training_performed": false
+}

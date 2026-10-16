@@ -1,12 +1,13 @@
 [project]
 name = "proyecto-mle-fraude"
-version = "0.1.0"
+version = "1.0.0"
 description = "Detección de fraude y monitoreo temporal para MLE III"
 requires-python = ">=3.12,<3.15"
 dependencies = [
   "pandas>=2.3,<4", "numpy>=2.3,<3", "pyarrow>=20,<26",
-  "scikit-learn>=1.7,<2", "matplotlib>=3.10,<4",
-  "mlflow>=3.10,<4", "python-dotenv>=1.2,<2",
+  "scikit-learn>=1.7,<2", "matplotlib>=3.10,<4", "joblib>=1.5,<2",
+  "mlflow>=3.10,<4", "python-dotenv>=1.2,<2", "optuna>=5,<6", "xgboost>=3.4,<4",
+  "evidently==0.7.23", "river==0.26.1", "streamlit==1.66.0",
   "ipykernel>=6,<8", "nbformat>=5,<6", "nbclient>=0.10,<1", "nbconvert>=7,<8"
 ]
 

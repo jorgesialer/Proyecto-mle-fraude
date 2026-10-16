@@ -1,0 +1,83 @@
+{
+  "trials_per_method": 10,
+  "folds": 3,
+  "seed": 42,
+  "tpe_startup_trials": 4,
+  "tpe_multivariate": false,
+  "search_space": {
+    "n_estimators": {
+      "kind": "int",
+      "low": 60,
+      "high": 180,
+      "step": 30
+    },
+    "max_depth": {
+      "kind": "int",
+      "low": 2,
+      "high": 6,
+      "step": 1
+    },
+    "learning_rate": {
+      "kind": "float",
+      "low": 0.03,
+      "high": 0.2,
+      "log": true
+    },
+    "min_child_weight": {
+      "kind": "float",
+      "low": 1.0,
+      "high": 20.0,
+      "log": true
+    },
+    "subsample": {
+      "kind": "float",
+      "low": 0.8,
+      "high": 1.0,
+      "log": false
+    },
+    "colsample_bytree": {
+      "kind": "float",
+      "low": 0.8,
+      "high": 1.0,
+      "log": false
+    },
+    "reg_lambda": {
+      "kind": "float",
+      "low": 0.1,
+      "high": 30.0,
+      "log": true
+    }
+  },
+  "fixed_params": {
+    "objective": "binary:logistic",
+    "tree_method": "hist",
+    "max_bin": 128,
+    "eval_metric": "aucpr",
+    "n_jobs": 4,
+    "random_state": 42,
+    "verbosity": 0
+  },
+  "objective": "mean_temporal_average_precision",
+  "class_weight_policy": "sqrt(n_negative/n_positive), training fold only",
+  "no_early_stopping": true,
+  "no_pruning": true,
+  "sampling": "none",
+  "source_sha256": "16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b",
+  "validation_steps": [
+    [
+      101,
+      150
+    ],
+    [
+      151,
+      200
+    ],
+    [
+      201,
+      250
+    ]
+  ],
+  "threshold_partition_used": false,
+  "offline_test_used": false,
+  "production_used": false
+}

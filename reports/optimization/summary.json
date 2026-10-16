@@ -1,0 +1,79 @@
+{
+  "stage": "optimization",
+  "experiment_name": "fraud-hyperparameter-search",
+  "methods": [
+    {
+      "method": "random",
+      "trials": 10,
+      "best_trial": 9,
+      "best_ap": 0.9977949070840593,
+      "best_std_ap": 0.0019996571401934274,
+      "best_params": {
+        "n_estimators": 90,
+        "max_depth": 3,
+        "learning_rate": 0.08399497425375417,
+        "min_child_weight": 1.5252697030515172,
+        "subsample": 0.960439396150808,
+        "colsample_bytree": 0.8149101287359543,
+        "reg_lambda": 27.838036931305016
+      },
+      "objective_seconds": 418.30729030026123,
+      "run_id": "15706f2b18064e4a8241bda685a2143a",
+      "trial_run_ids": [
+        "c29a6e3eddb845069e59f3694999f4b8",
+        "3bbe50ef494340a18d1deecf126de7b0",
+        "ac6853123598440392b88208c6a454ae",
+        "bc43a886c52a441b89044f11c7ab2a30",
+        "43ab37a99e4e4d2b823d748ebf0e491a",
+        "db547a3201b54ea6af546cd3febda0d5",
+        "1fd71c8907e949a2931c8f7fd8abe31d",
+        "54ea9b35755f4a57aa1c9fbaa397e4b6",
+        "90e5403b2f6641f199d25d445aef7503",
+        "f40b10d333554dd089874a705f472e79"
+      ]
+    },
+    {
+      "method": "tpe",
+      "trials": 10,
+      "best_trial": 5,
+      "best_ap": 0.9972325807517736,
+      "best_std_ap": 0.003047214710216124,
+      "best_params": {
+        "n_estimators": 180,
+        "max_depth": 4,
+        "learning_rate": 0.030708919427112912,
+        "min_child_weight": 18.958668089721655,
+        "subsample": 0.8040814689606809,
+        "colsample_bytree": 0.9831275941557748,
+        "reg_lambda": 0.1566753562975886
+      },
+      "objective_seconds": 539.5846332004294,
+      "run_id": "18a05b9c6456425dae0568f6964613f2",
+      "trial_run_ids": [
+        "4c8f0c6e57e94e80a8e022a9235ea5a1",
+        "9cbf7856d19f4d6aac4ebf36484b9462",
+        "db11561068fe4f9e990970fc24e25065",
+        "4737f8a9f7184e928277abd1caf85ceb",
+        "a7ef06a65f5b48b1a523c98f34217daf",
+        "233bfca3c70048469bd8c167e4111214",
+        "dbd23166495549b0bdde614fe88d1c30",
+        "b1c2adb461c443fe8b2019fbf75cf0db",
+        "d8093331a3a0417c914b17a4f61e65a2",
+        "c741cbbd7c4648c5b52f41f04494e4d9"
+      ]
+    }
+  ],
+  "baseline_mean_ap": 0.9942805910370108,
+  "best_boosting_method": "random",
+  "best_boosting_mean_ap": 0.9977949070840593,
+  "selected_family": "xgboost",
+  "selection_rule": "highest mean temporal AP; baseline retained if gain <= 1e-6",
+  "source_sha256": "16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b",
+  "trials_per_method": 10,
+  "folds": 3,
+  "threshold_partition_used": false,
+  "offline_test_used": false,
+  "production_used": false,
+  "single_seed_comparison": true,
+  "model_role": "candidate_before_threshold_and_offline_test"
+}
