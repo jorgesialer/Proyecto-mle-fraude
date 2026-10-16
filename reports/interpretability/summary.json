@@ -1,0 +1,24 @@
+{
+  "model_sha256": "861c70da70553195a55ba6f4e044b261b39767cc07dd1d0fd1142c62f066d1db",
+  "run_id": "bbd08a3a5e16428f8a8b8976c17b08d4",
+  "rows": 20000,
+  "frauds": 16,
+  "method": "native XGBoost TreeSHAP (tree-path-dependent; no background dataset)",
+  "additivity_max_abs_error": 4.76837158203125e-06,
+  "score_parity_max_abs_error": 0.0,
+  "top_features": [
+    "origin_debit_discrepancy",
+    "newbalanceOrig",
+    "destination_is_merchant",
+    "oldbalanceDest",
+    "amount_to_origin_balance"
+  ],
+  "local_cases": 8,
+  "production_used": false,
+  "limitations": [
+    "Sample uniform; few positive examples make permutation AP variable.",
+    "Correlated original/derived features complicate permutation and PDP/ICE; perturbations may be unrealistic.",
+    "SHAP contributions add in raw log-odds, not probability; scores are not calibrated.",
+    "No protected demographic attributes: no demographic fairness claim. Explanations are not causal."
+  ]
+}

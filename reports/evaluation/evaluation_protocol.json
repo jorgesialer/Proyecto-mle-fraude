@@ -1,0 +1,20 @@
+{
+  "criterion": "max_f2",
+  "beta": 2,
+  "tie_break": "highest_threshold",
+  "comparison": "score >= threshold",
+  "training_steps": [
+    1,
+    250
+  ],
+  "threshold_steps": [
+    251,
+    300
+  ],
+  "offline_steps": [
+    301,
+    400
+  ],
+  "production_used": false,
+  "retrain_after_threshold": false
+}

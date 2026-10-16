@@ -1,0 +1,14 @@
+{
+  "observed_error_changes": [],
+  "controlled_scenario": {
+    "description": "Synthetic ONLY: flip 15% of labels after midpoint, seed42; original data/model unchanged.",
+    "change_position": 287795,
+    "flipped_labels": 43106,
+    "detections": [
+      287871,
+      355775
+    ],
+    "first_detection_delay_rows": 76
+  },
+  "interpretation": "Observed changes in error mean are investigation signals, not proof of conditional concept drift. No alert is not proof of stationarity."
+}

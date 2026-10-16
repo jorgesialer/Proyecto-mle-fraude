@@ -1,0 +1,9 @@
+{
+  "policy_hash_verified": true,
+  "decision_model_hash_verified": true,
+  "validation_and_test_disjoint": true,
+  "offline_confusion_counts_verified": true,
+  "loaded_decision_checked_on_tp_fp_fn_tn": true,
+  "saved_threshold_verified": true,
+  "production_used": false
+}

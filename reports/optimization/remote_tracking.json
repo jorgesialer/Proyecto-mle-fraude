@@ -1,0 +1,106 @@
+{
+  "experiment_name": "fraud-hyperparameter-search",
+  "experiment_id": "2",
+  "methods": {
+    "random": {
+      "run_id": "ee7dfc831ece4bafbe337ac26e16f882",
+      "run_url": "https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/2/runs/ee7dfc831ece4bafbe337ac26e16f882"
+    },
+    "tpe": {
+      "run_id": "7373d47b615b4ae2a8e037f8238a6653",
+      "run_url": "https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/2/runs/7373d47b615b4ae2a8e037f8238a6653"
+    }
+  },
+  "trial_runs": {
+    "random_0": {
+      "run_id": "f0c990dcf09c43ffaf68ac8971260842",
+      "verified": true
+    },
+    "random_1": {
+      "run_id": "8dbbd1182724461dbc8ca1c080ea7aa0",
+      "verified": true
+    },
+    "random_2": {
+      "run_id": "1501fd54c8bd457c9027e6c8419fe430",
+      "verified": true
+    },
+    "random_3": {
+      "run_id": "cc4f3dc36c2343c4a86e703c3aedcc02",
+      "verified": true
+    },
+    "random_4": {
+      "run_id": "abcddad8985641cea4e7b009a5e15ebc",
+      "verified": true
+    },
+    "random_5": {
+      "run_id": "a4446591774a40afbbe2e4a08a7272c2",
+      "verified": true
+    },
+    "random_6": {
+      "run_id": "ab861f6c3f374299b3f2cc2badaaf0b0",
+      "verified": true
+    },
+    "random_7": {
+      "run_id": "f53f25bdcfb042bcb5dd3b4be949f03c",
+      "verified": true
+    },
+    "random_8": {
+      "run_id": "8dc113968f604045acbd171c5c5f9659",
+      "verified": true
+    },
+    "random_9": {
+      "run_id": "f97e415edb304d0fa7992fc326f60a6d",
+      "verified": true
+    },
+    "tpe_0": {
+      "run_id": "61239a3bc67f4292850de1d0ca799985",
+      "verified": true
+    },
+    "tpe_1": {
+      "run_id": "4a1901dd1f774d0783581579e9dec92a",
+      "verified": true
+    },
+    "tpe_2": {
+      "run_id": "522b78166d2549799350ecca08c803dd",
+      "verified": true
+    },
+    "tpe_3": {
+      "run_id": "54fce3d0447a4fb09abb2237cad13620",
+      "verified": true
+    },
+    "tpe_4": {
+      "run_id": "291ab72372f240a384491652b097caf8",
+      "verified": true
+    },
+    "tpe_5": {
+      "run_id": "660b1d14155849ac816eb4ff5796b26a",
+      "verified": true
+    },
+    "tpe_6": {
+      "run_id": "3a17264ee82645aa966786c6b3f89b6d",
+      "verified": true
+    },
+    "tpe_7": {
+      "run_id": "0e17758971f247df9f9c28b664e5d8bb",
+      "verified": true
+    },
+    "tpe_8": {
+      "run_id": "d36a1e8b178144c4ba9620be44778471",
+      "verified": true
+    },
+    "tpe_9": {
+      "run_id": "81be3c66675e4da3b0323f31455c70b3",
+      "verified": true
+    }
+  },
+  "remote_write_verified": true,
+  "candidate": {
+    "run_id": "c8303ef974ee4a879e4fa6a9594e8c5a",
+    "verified": true,
+    "run_url": "https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/2/runs/c8303ef974ee4a879e4fa6a9594e8c5a",
+    "model_role": "candidate_before_threshold_and_offline_test",
+    "downloaded_model_hash_verified": true
+  },
+  "verified_trial_count": 20,
+  "parent_metrics_verified": true
+}

@@ -37,6 +37,7 @@ El tratamiento nativo de NaN y la matriz float32 son iguales entre los métodos 
 
 Siguiente paso: fijar el candidato, elegir umbral usando exclusivamente su partición y después evaluar una vez el bloque offline. Posteriormente se desarrollarán interpretabilidad y monitoreo.
 
-## Publicación remota pendiente
 
-La revisión automática rechazó publicar el nuevo modelo XGBoost y los veinte trials porque la autorización explícita anterior cubría el baseline. No se ejecutó la publicación de esta etapa. Modelo, métricas, código y ejemplo de ocho filas están preparados localmente para revisión y autorización.
+## Publicación verificada
+
+Los dos padres, veinte trials y el candidato están publicados en DagsHub. Se verificaron métricas, estados FINISHED y hash del modelo descargado. [Candidato](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/2/runs/c8303ef974ee4a879e4fa6a9594e8c5a). Evidencia: `remote_tracking.json`. La evaluación con umbral se documenta por separado.

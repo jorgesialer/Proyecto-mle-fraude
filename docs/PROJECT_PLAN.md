@@ -1,16 +1,12 @@
-# Plan y evidencias de la rúbrica
+# Rúbrica y evidencia
 
-| Bloque | Peso | Entregable | Estado inicial |
-| --- | --- | --- | --- |
-| Repositorio | 10 % | Main, development, PR integrada, release 1.0.0 | Preparación local; remoto y PR pendientes |
-| Técnicas avanzadas | 50 % | Baseline, Random Search vs Optuna/TPE, MLflow y SHAP global/local con PDP/ICE | Baseline publicado; optimización y candidato completos localmente; umbral, test final y XAI pendientes |
-| Monitoreo | 30 % | Calidad, drift, desempeño, alertas, app y reporte HTML | Pendiente |
-| Documentación | 10 % | README, cuatro notebooks, diccionario y conclusiones | Dos notebooks ejecutados y diccionario completos; resto pendiente |
+| Bloque | Peso | Evidencia y estado |
+| --- | --- | --- |
+| Repositorio | 10 % | Repo independiente creado; main/development locales, PR y release al publicar |
+| Optimización e interpretación | 50 % | Baseline, Random Search/TPE, 20 trials/60 folds, modelo congelado, MLflow, SHAP global/local, permutación, PDP/ICE; completo |
+| Monitoreo | 30 % | Replay 401–743, calidad, PSI/KS, ADWIN, política, app Streamlit, HTML Evidently y notebook; completo localmente |
+| Documentación | 10 % | README, diccionario, protocolos, ficha del modelo, conclusiones y cuatro notebooks ejecutados |
 
-Etapas acordadas: (1) datos e infraestructura, (2) baseline, (3) optimización, (4) interpretabilidad, (5) monitoreo y (6) verificación y entrega. No crear métricas ficticias ni afirmar que un run de preparación es un experimento de entrenamiento.
+Se conserva V2. La conexión MLflow se reutiliza con experimentos independientes. El proyecto nuevo corresponde a release 1.0.0 según la consigna; la publicación se acredita con enlaces reales. No se inventan PR, releases, despliegues ni desempeño real.
 
-Se conserva el repositorio anterior de aprobación HMDA. Este proyecto tiene objetivo, modelo, documentación y experimentos propios. El módulo de tracking sigue el patrón reutilizable de `src/mlflow_utils.py` de la V2 del repositorio de jorgesialer/Proyecto-mle-riesgo; no se reutilizan ni el modelo ni el corpus hipotecario.
-
-## Secuencia Git propuesta
-
-`main` contiene hitos revisados. `development` integra trabajo. Cada etapa usa una rama de trabajo y PR hacia development o main según el hito. Antes de entregar: al menos una PR integrada y release v1.0.0 con notas. El README final enlazará los objetos reales cuando existan; este plan no los presenta como completados.
+La evidencia del umbral se guarda antes de abrir test; las alertas se fijan antes de producción. Los hashes enlazan datos, modelo, política, predicciones y resultados. La selección terminó antes de interpretabilidad/monitoreo. El origen y alcance de las muestras se declaran en cada notebook.
