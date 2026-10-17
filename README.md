@@ -81,7 +81,8 @@ Las etiquetas ya están disponibles en el dataset, por eso se puede evaluar cada
 
 ```text
 Proyecto-mle-fraude/
-├── README.md           # Documentación completa
+├── README.md           # Documentación y conclusiones
+├── model-card.md       # Ficha técnica y limitaciones del modelo
 ├── app.py              # Panel de monitoreo
 ├── requirements.txt    # Dependencias
 ├── notebooks/          # Los cuatro notebooks solicitados
@@ -92,7 +93,7 @@ Proyecto-mle-fraude/
 └── evidencias/         # Capturas y gráficos utilizados en la entrega
 ```
 
-El README concentra las conclusiones, la ficha del modelo, el diccionario y las instrucciones. `reports/resultados.json` contiene los resúmenes y las tablas que necesita la aplicación. Los registros por fold, intentos, predicciones y comprobaciones técnicas permanecen en `artifacts/run_reports/`, fuera de Git.
+El README concentra las conclusiones, el diccionario y las instrucciones. La [ficha del modelo](model-card.md) reúne el uso previsto, las métricas y las limitaciones en un archivo independiente. `reports/resultados.json` contiene los resúmenes y las tablas que necesita la aplicación. Los registros por fold, intentos, predicciones y comprobaciones técnicas permanecen en `artifacts/run_reports/`, fuera de Git.
 
 Los módulos de `src/fraud` separan responsabilidades del software. `schema`, `modeling`, `boosting` y `decision` conservan sus nombres porque el modelo serializado los utiliza al cargar sus transformadores y su regla de decisión. El archivo `tests/test_project.py` agrupa las comprobaciones por componente.
 
@@ -135,7 +136,7 @@ Los parámetros, métricas y modelos están registrados en MLflow a través de D
 - [Modelo final y evaluación](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/3/runs/5cc382370d9f41eda4e300af13eb1ba1).
 - [Interpretación](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/3/runs/095cbbaffc5f41c9909c437b98808c33) y [monitoreo](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/3/runs/8718daf1d9734bd68975ea8df3800641).
 
-El modelo registrado es `fraud-paysim-posttransaction`, versión 1. La etapa Production identifica el modelo usado en la simulación; no significa que exista un servicio bancario desplegado. La [ficha del modelo](#ficha-del-modelo) resume su uso y sus limitaciones.
+El modelo registrado es `fraud-paysim-posttransaction`, versión 1. La etapa Production identifica el modelo usado en la simulación; no significa que exista un servicio bancario desplegado. La [ficha del modelo](model-card.md) resume su uso y sus limitaciones.
 
 ## Conclusiones
 
@@ -145,21 +146,6 @@ El monitoreo permitió identificar una ventana con cambios en las variables, aun
 
 La validación incluye 22 pruebas del código y una comprobación del filtro de periodos de la aplicación. Los cuatro notebooks contienen sus resultados de ejecución. La [estrategia de Git y los entregables](#estructura-y-control-de-versiones) relacionan el contenido con la consigna.
 
-
-## Ficha del modelo
-
-| Campo | Especificación |
-| --- | --- |
-| Objetivo | Clasificación binaria de `isFraud` en PaySim |
-| Algoritmo | XGBoost, 90 árboles y profundidad 3 |
-| Entrada | Trece predictores preparados; tipo, saldos, monto e indicadores derivados |
-| Entrenamiento | Steps 1–250, sin validación ni test |
-| Decisión | Score ≥ 0,9741922617; scores sin calibración de probabilidades |
-| Momento de uso | Después de registrar la transacción |
-| Registro | `fraud-paysim-posttransaction`, versión 1 en MLflow |
-| Límites | Datos simulados, variables correlacionadas y ausencia de atributos para evaluar equidad demográfica |
-
-El [modelo final en DagsHub](https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/3/runs/5cc382370d9f41eda4e300af13eb1ba1) conserva el artefacto y sus métricas. Los resultados completos aparecen en la sección Resultados y en `reports/resultados.json`.
 
 ## Ejecuta el análisis completo
 
