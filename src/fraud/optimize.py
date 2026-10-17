@@ -87,9 +87,9 @@ def prepare_matrix(root, profile):
 
 def optimize(root:Path=ROOT, trials:int=10, threads:int=4):
     if trials<5 or threads<1:raise ValueError('Usar al menos cinco trials y un hilo')
-    reports=root/'reports/optimization';reports.mkdir(parents=True,exist_ok=True)
+    reports=root/'artifacts/run_reports/optimization';reports.mkdir(parents=True,exist_ok=True)
     artifacts=root/'artifacts/optimization';artifacts.mkdir(parents=True,exist_ok=True)
-    profile=json.loads((root/'reports/dataset_profile.json').read_text(encoding='utf-8'))
+    profile=json.loads((root/'artifacts/run_reports/dataset_profile.json').read_text(encoding='utf-8'))
     plan={'trials_per_method':trials,'folds':3,'seed':42,'tpe_startup_trials':4,'tpe_multivariate':False,
           'search_space':SPACE,'fixed_params':fixed_params(threads),'objective':'mean_temporal_average_precision',
           'class_weight_policy':'sqrt(n_negative/n_positive), training fold only',
@@ -192,7 +192,7 @@ def optimize(root:Path=ROOT, trials:int=10, threads:int=4):
             mlflow.log_artifact(str(method_dir/'trials.csv'))
             mlflow.log_artifact(str(method_dir/'summary.json'))
             summaries.append(method_summary)
-    baseline=json.loads((root/'reports/baseline/summary.json').read_text(encoding='utf-8'))
+    baseline=json.loads((root/'artifacts/run_reports/baseline/summary.json').read_text(encoding='utf-8'))
     baseline_ap=next(r['average_precision_mean'] for r in baseline['models'] if r['model']=='decision_tree')
     best_method=max(summaries,key=lambda s:s['best_ap'])
     summary={'stage':'optimization','experiment_name':EXPERIMENT,'methods':summaries,'baseline_mean_ap':baseline_ap,

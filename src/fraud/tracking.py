@@ -51,7 +51,7 @@ def configure(root: Path = ROOT, experiment_name: str | None = None, backend: st
 def log_preparation(root: Path = ROOT) -> dict:
     """Log data evidence only: this run is not a training experiment."""
     mlflow, experiment_id, backend, name = configure(root)
-    reports = root / "reports"
+    reports = root / 'artifacts/run_reports'
     profile = json.loads((reports / "dataset_profile.json").read_text(encoding="utf-8"))
     with mlflow.start_run(experiment_id=experiment_id, run_name="paysim_data_preparation",
                           tags={"stage": "data_preparation", "prediction_moment": "post_transaction"}) as run:

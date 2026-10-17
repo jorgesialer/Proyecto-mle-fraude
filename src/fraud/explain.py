@@ -70,8 +70,8 @@ def contributions(pipeline, X):
 
 
 def explain(root:Path=ROOT):
-    out=root/'reports/interpretability';out.mkdir(parents=True,exist_ok=True)
-    evaluation=json.loads((root/'reports/evaluation/summary.json').read_text(encoding='utf-8'))
+    out=root/'artifacts/run_reports/interpretability';out.mkdir(parents=True,exist_ok=True)
+    evaluation=json.loads((root/'artifacts/run_reports/evaluation/summary.json').read_text(encoding='utf-8'))
     model_path=root/'artifacts/evaluation/decision_model.joblib'
     if sha256(model_path)!=evaluation['decision_model_sha256']:raise ValueError('Modelo diferente')
     if (out/'summary.json').exists():

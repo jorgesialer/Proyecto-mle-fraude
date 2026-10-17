@@ -72,11 +72,11 @@ def run_baseline(root: Path = ROOT) -> dict:
     import mlflow.sklearn
     from mlflow.models import infer_signature
 
-    reports = root / "reports/baseline"
+    reports = root / 'artifacts/run_reports/baseline'
     artifacts = root / "artifacts/baseline"
     reports.mkdir(parents=True, exist_ok=True)
     artifacts.mkdir(parents=True, exist_ok=True)
-    profile = json.loads((root / "reports/dataset_profile.json").read_text(encoding="utf-8"))
+    profile = json.loads((root / 'artifacts/run_reports/dataset_profile.json').read_text(encoding="utf-8"))
     path = root / "data/processed/development.parquet"
     if sha256(path) != profile["partitions"]["development"]["parquet_sha256"]:
         raise ValueError("El dataset de desarrollo no coincide con el manifiesto")
@@ -189,7 +189,7 @@ def run_baseline(root: Path = ROOT) -> dict:
         np.testing.assert_allclose(loaded.predict_proba(example), pipeline.predict_proba(example))
         mlflow.log_metric("baseline_full_development_fit_seconds", final_fit_seconds)
         mlflow.log_artifacts(str(model_path), artifact_path="model")
-        mlflow.log_artifact(str(root / "reports/dataset_profile.json"), artifact_path="data_contract")
+        mlflow.log_artifact(str(root / 'artifacts/run_reports/dataset_profile.json'), artifact_path="data_contract")
         summary = {
             "stage": "baseline", "experiment_name": exp_name, "backend": backend, "run_id": run_id,
             "models": comparison.to_dict(orient="records"), "tree_pooled_validation": pooled,

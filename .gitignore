@@ -2,6 +2,7 @@
 .venv/
 __pycache__/
 .ipynb_checkpoints/
+.pytest_cache/
 data/raw/*
 !data/raw/.gitkeep
 data/processed/*
@@ -9,20 +10,3 @@ data/processed/*
 artifacts/
 mlflow.db*
 mlartifacts/
-.pytest_cache/
-reports-delivered/
-
-# Intermediate run details remain local; final reports and MLflow links are delivered.
-reports/optimization/random/trial_*/
-reports/optimization/tpe/trial_*/
-reports/STAGE1_RESULT.md
-reports/baseline/STAGE2_RESULT.md
-reports/baseline/02_entrenamiento.html
-reports/optimization/02_entrenamiento_optimizacion.html
-reports/optimization/STAGE3_RESULT.md
-reports/evaluation/EVALUATION_RESULT.md
-reports/environment-stage1.json
-reports/optimization/environment-stage3.json
-reports/dagshub_connection.json
-reports/tracking_status.json
-requirements-stage*.txt

@@ -33,7 +33,7 @@ def prepare(csv_path: Path, root: Path = ROOT, chunksize: int = 200_000) -> dict
     if chunksize < 1:
         raise ValueError("chunksize debe ser positivo")
     processed = root / "data/processed"
-    reports = root / "reports"
+    reports = root / 'artifacts/run_reports'
     processed.mkdir(parents=True, exist_ok=True)
     reports.mkdir(parents=True, exist_ok=True)
     source_hash = sha256(csv_path)

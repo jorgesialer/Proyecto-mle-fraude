@@ -15,6 +15,7 @@ from .explain import sample_rows
 from .prepare import ROOT, sha256
 from .schema import FEATURES, TARGET
 from .tracking import configure
+from .reporting import export_delivery
 
 POLICY={'reference_steps':[301,400],'current_steps':[401,743],'window_steps':50,
  'reference_sample_rows':50000,'seed':42,'psi_alert':0.2,'ks_min_effect':0.1,'bh_alpha':0.05,
@@ -59,21 +60,22 @@ def detect_changes(errors,delta=.002):
 
 
 def monitor(root:Path=ROOT):
-    out=root/'reports/monitoring';out.mkdir(parents=True,exist_ok=True)
+    out=root/'artifacts/run_reports/monitoring';out.mkdir(parents=True,exist_ok=True)
     artifacts=root/'artifacts/monitoring';artifacts.mkdir(parents=True,exist_ok=True)
-    evaluation=json.loads((root/'reports/evaluation/summary.json').read_text(encoding='utf-8'))
+    evaluation=json.loads((root/'artifacts/run_reports/evaluation/summary.json').read_text(encoding='utf-8'))
     model_path=root/'artifacts/evaluation/decision_model.joblib';model_hash=sha256(model_path)
     if model_hash!=evaluation['decision_model_sha256']:raise ValueError('Modelo diferente del evaluado')
     if (out/'summary.json').exists():
         summary=json.loads((out/'summary.json').read_text(encoding='utf-8'))
         if summary['model_sha256']!=model_hash:raise ValueError('Monitoreo de otro modelo')
+        export_delivery(root)
         return summary
     policy_path=out/'alert_policy.json'
     if policy_path.exists() and json.loads(policy_path.read_text(encoding='utf-8'))!=POLICY:
         raise ValueError('Política de alertas modificada después de iniciar replay')
     policy_path.write_text(json.dumps(POLICY,indent=2),encoding='utf-8')
     policy_hash=sha256(policy_path)
-    profile=json.loads((root/'reports/dataset_profile.json').read_text(encoding='utf-8'))
+    profile=json.loads((root/'artifacts/run_reports/dataset_profile.json').read_text(encoding='utf-8'))
     prod_path=root/'data/processed/production.parquet'
     if sha256(prod_path)!=profile['partitions']['production']['parquet_sha256']:raise ValueError('Producción modificada')
     model=joblib.load(model_path)
@@ -171,6 +173,7 @@ def monitor(root:Path=ROOT):
         mlflow.log_metrics({**overall,'rows':len(current),'observed_adwin_signals':len(observed),'inference_seconds':seconds})
         mlflow.log_artifacts(str(out),artifact_path='monitoring');summary['run_id']=run.info.run_id
     (out/'summary.json').write_text(json.dumps(summary,indent=2),encoding='utf-8')
+    export_delivery(root)
     return summary
 
 

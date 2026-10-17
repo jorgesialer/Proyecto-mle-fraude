@@ -1,0 +1,2244 @@
+{
+  "baseline": {
+    "stage": "baseline",
+    "experiment_name": "fraud-baseline-temporal",
+    "backend": "local",
+    "run_id": "fde5ae49c22248ffa6da2c03922729e7",
+    "models": [
+      {
+        "model": "decision_tree",
+        "average_precision_mean": 0.9942805910370108,
+        "average_precision_std": 0.005172415632412,
+        "roc_auc_mean": 0.9988535487573296,
+        "roc_auc_std": 0.0017311469781819,
+        "precision_mean": 0.7155659764511393,
+        "precision_std": 0.1574935969591389,
+        "recall_mean": 0.9971158182182585,
+        "recall_std": 0.0035255082483785,
+        "f1_mean": 0.8262036532093459,
+        "f1_std": 0.1121735559710754,
+        "f2_mean": 0.9179314727518676,
+        "f2_std": 0.0576603406765711,
+        "alert_rate_mean": 0.0011503052589157,
+        "alert_rate_std": 0.0003363368905007,
+        "fit_seconds_mean": 30.49701966663512,
+        "fit_seconds_std": 15.945568000708867
+      },
+      {
+        "model": "dummy_prior",
+        "average_precision_mean": 0.0008177550569625,
+        "average_precision_std": 0.0002896586857264,
+        "roc_auc_mean": 0.5,
+        "roc_auc_std": 0.0,
+        "precision_mean": 0.0,
+        "precision_std": 0.0,
+        "recall_mean": 0.0,
+        "recall_std": 0.0,
+        "f1_mean": 0.0,
+        "f1_std": 0.0,
+        "f2_mean": 0.0,
+        "f2_std": 0.0,
+        "alert_rate_mean": 0.0,
+        "alert_rate_std": 0.0,
+        "fit_seconds_mean": 6.49700383337525,
+        "fit_seconds_std": 3.085602170563081
+      }
+    ],
+    "tree_pooled_validation": {
+      "average_precision": 0.994248126223367,
+      "roc_auc": 0.9987089315683331,
+      "precision": 0.6913061738765225,
+      "recall": 0.9969715324046032,
+      "f1": 0.816468253968254,
+      "f2": 0.9159710628825821,
+      "alert_rate": 0.0010878226003940101,
+      "prevalence": 0.0007543028615079844,
+      "tn": 2186390,
+      "fp": 735,
+      "fn": 5,
+      "tp": 1646
+    },
+    "fold_count": 3,
+    "development_rows": 3248292,
+    "oof_rows": 2188776,
+    "fixed_threshold": 0.5,
+    "tree_parameters": {
+      "max_depth": 6,
+      "min_samples_leaf": 20,
+      "class_weight": "balanced",
+      "random_state": 42
+    },
+    "threshold_partition_used": false,
+    "offline_test_used": false,
+    "production_used": false,
+    "model_role": "baseline_only",
+    "scores_calibrated": false,
+    "baseline_full_development_fit_seconds": null,
+    "timing_note": "Final refit duration was not persisted before the export error; fold timings are available.",
+    "serialization_repaired": true,
+    "source_sha256": "16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b",
+    "model_sha256": "633aa48faf53a39f18f68c3d1a0702e15f9a95be9c1d7833dd92a7897716be8e",
+    "model_reload_verified": true
+  },
+  "optimization": {
+    "stage": "optimization",
+    "experiment_name": "fraud-hyperparameter-search",
+    "methods": [
+      {
+        "method": "random",
+        "trials": 10,
+        "best_trial": 9,
+        "best_ap": 0.9977949070840593,
+        "best_std_ap": 0.0019996571401934274,
+        "best_params": {
+          "n_estimators": 90,
+          "max_depth": 3,
+          "learning_rate": 0.08399497425375417,
+          "min_child_weight": 1.5252697030515172,
+          "subsample": 0.960439396150808,
+          "colsample_bytree": 0.8149101287359543,
+          "reg_lambda": 27.838036931305016
+        },
+        "objective_seconds": 418.30729030026123,
+        "run_id": "15706f2b18064e4a8241bda685a2143a",
+        "trial_run_ids": [
+          "c29a6e3eddb845069e59f3694999f4b8",
+          "3bbe50ef494340a18d1deecf126de7b0",
+          "ac6853123598440392b88208c6a454ae",
+          "bc43a886c52a441b89044f11c7ab2a30",
+          "43ab37a99e4e4d2b823d748ebf0e491a",
+          "db547a3201b54ea6af546cd3febda0d5",
+          "1fd71c8907e949a2931c8f7fd8abe31d",
+          "54ea9b35755f4a57aa1c9fbaa397e4b6",
+          "90e5403b2f6641f199d25d445aef7503",
+          "f40b10d333554dd089874a705f472e79"
+        ]
+      },
+      {
+        "method": "tpe",
+        "trials": 10,
+        "best_trial": 5,
+        "best_ap": 0.9972325807517736,
+        "best_std_ap": 0.003047214710216124,
+        "best_params": {
+          "n_estimators": 180,
+          "max_depth": 4,
+          "learning_rate": 0.030708919427112912,
+          "min_child_weight": 18.958668089721655,
+          "subsample": 0.8040814689606809,
+          "colsample_bytree": 0.9831275941557748,
+          "reg_lambda": 0.1566753562975886
+        },
+        "objective_seconds": 539.5846332004294,
+        "run_id": "18a05b9c6456425dae0568f6964613f2",
+        "trial_run_ids": [
+          "4c8f0c6e57e94e80a8e022a9235ea5a1",
+          "9cbf7856d19f4d6aac4ebf36484b9462",
+          "db11561068fe4f9e990970fc24e25065",
+          "4737f8a9f7184e928277abd1caf85ceb",
+          "a7ef06a65f5b48b1a523c98f34217daf",
+          "233bfca3c70048469bd8c167e4111214",
+          "dbd23166495549b0bdde614fe88d1c30",
+          "b1c2adb461c443fe8b2019fbf75cf0db",
+          "d8093331a3a0417c914b17a4f61e65a2",
+          "c741cbbd7c4648c5b52f41f04494e4d9"
+        ]
+      }
+    ],
+    "baseline_mean_ap": 0.9942805910370108,
+    "best_boosting_method": "random",
+    "best_boosting_mean_ap": 0.9977949070840593,
+    "selected_family": "xgboost",
+    "selection_rule": "highest mean temporal AP; baseline retained if gain <= 1e-6",
+    "source_sha256": "16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b",
+    "trials_per_method": 10,
+    "folds": 3,
+    "threshold_partition_used": false,
+    "offline_test_used": false,
+    "production_used": false,
+    "single_seed_comparison": true,
+    "model_role": "candidate_before_threshold_and_offline_test"
+  },
+  "candidate": {
+    "run_id": "56ca4b35d3224862bb93a38710eba41c",
+    "family": "xgboost",
+    "selection_method": "random",
+    "params": {
+      "n_estimators": 90,
+      "max_depth": 3,
+      "learning_rate": 0.08399497425375417,
+      "min_child_weight": 1.5252697030515172,
+      "subsample": 0.960439396150808,
+      "colsample_bytree": 0.8149101287359543,
+      "reg_lambda": 27.838036931305016,
+      "objective": "binary:logistic",
+      "tree_method": "hist",
+      "max_bin": 128,
+      "eval_metric": "aucpr",
+      "n_jobs": 4,
+      "random_state": 42,
+      "verbosity": 0,
+      "scale_pos_weight": 33.798849039719016
+    },
+    "fit_step_min": 1,
+    "fit_step_max": 250,
+    "refit_seconds": 21.98125629988499,
+    "model_sha256": "7733ec68318a19269286f2a543801230d0a44cd021ff62b589c4a9d5661f316e",
+    "model_reload_verified": true,
+    "threshold_selected": false,
+    "offline_test_used": false,
+    "production_used": false,
+    "model_role": "candidate_before_threshold_and_offline_test",
+    "source_sha256": "16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b"
+  },
+  "evaluation": {
+    "stage": "offline_evaluation",
+    "run_id": "de732b2a5a23477ba0d67dccb89ef67b",
+    "threshold": 0.9741922616958618,
+    "candidate_sha256": "7733ec68318a19269286f2a543801230d0a44cd021ff62b589c4a9d5661f316e",
+    "policy_sha256": "5f1eb9b9b77b1b15fa15a69a8cd659a1f71d7c16f81914586f5dffab36285d37",
+    "decision_model_sha256": "861c70da70553195a55ba6f4e044b261b39767cc07dd1d0fd1142c62f066d1db",
+    "criterion": "max_f2_validation_only",
+    "validation_metrics": {
+      "average_precision": 0.9973500053464429,
+      "roc_auc": 0.9999937906874513,
+      "precision": 0.9824253075571178,
+      "recall": 0.9982142857142857,
+      "f1": 0.9902568644818424,
+      "f2": 0.9950160199359203,
+      "alert_rate": 0.000689397812827888,
+      "prevalence": 0.0006784934537497668,
+      "tn": 824788,
+      "fp": 10,
+      "fn": 1,
+      "tp": 559
+    },
+    "validation_default_05": {
+      "average_precision": 0.9973500053464429,
+      "roc_auc": 0.9999937906874513,
+      "precision": 0.9755671902268761,
+      "recall": 0.9982142857142857,
+      "f1": 0.9867608120035305,
+      "f2": 0.9936011375755421,
+      "alert_rate": 0.0006942441946403864,
+      "prevalence": 0.0006784934537497668,
+      "tn": 824784,
+      "fp": 14,
+      "fn": 1,
+      "tp": 559
+    },
+    "offline_metrics": {
+      "average_precision": 0.9992693341455355,
+      "roc_auc": 0.9999995744771166,
+      "precision": 0.9852941176470589,
+      "recall": 0.9962825278810409,
+      "f1": 0.9907578558225508,
+      "f2": 0.9940652818991098,
+      "alert_rate": 0.0006350021594742556,
+      "prevalence": 0.0006279984591859366,
+      "tn": 1712288,
+      "fp": 16,
+      "fn": 4,
+      "tp": 1072
+    },
+    "offline_default_05": {
+      "average_precision": 0.9992693341455355,
+      "roc_auc": 0.9999995744771166,
+      "precision": 0.9790718835304822,
+      "recall": 1.0,
+      "f1": 0.9894252873563218,
+      "f2": 0.9957431056820285,
+      "alert_rate": 0.0006414222180718813,
+      "prevalence": 0.0006279984591859366,
+      "tn": 1712281,
+      "fp": 23,
+      "fn": 0,
+      "tp": 1076
+    },
+    "validation_rows": 825358,
+    "offline_rows": 1713380,
+    "validation_scoring": {
+      "partition_sha256": "249e275c7c8ee4da0f3e32c77347b2cc92ee312124b4b85d5fb5edca45ccd512",
+      "candidate_sha256": "7733ec68318a19269286f2a543801230d0a44cd021ff62b589c4a9d5661f316e",
+      "rows": 825358,
+      "inference_seconds": 0.9542361001949757,
+      "prediction_cache_reused": false,
+      "predictions_sha256": "34d13d7af5a195a6ec17120f5c54a0e02deed2839a35aafa17601e21e26ec6bb"
+    },
+    "offline_scoring": {
+      "partition_sha256": "1e4416f5e13d22ea50eb96765adb8cfa2741364d39b5970645aac6ee8223cf61",
+      "candidate_sha256": "7733ec68318a19269286f2a543801230d0a44cd021ff62b589c4a9d5661f316e",
+      "rows": 1713380,
+      "inference_seconds": 2.0633281997870654,
+      "prediction_cache_reused": false,
+      "predictions_sha256": "a71b4352b71e08fa7ad5cb89ceccca217eca1ab38decd5919b145a2bb489b089"
+    },
+    "model_reload_verified": true,
+    "retraining_performed": false,
+    "production_used": false,
+    "source_sha256": "16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b",
+    "registry_registration": false,
+    "scores_calibrated": false
+  },
+  "interpretability": {
+    "model_sha256": "861c70da70553195a55ba6f4e044b261b39767cc07dd1d0fd1142c62f066d1db",
+    "run_id": "bbd08a3a5e16428f8a8b8976c17b08d4",
+    "rows": 20000,
+    "frauds": 16,
+    "method": "native XGBoost TreeSHAP (tree-path-dependent; no background dataset)",
+    "additivity_max_abs_error": 4.76837158203125e-06,
+    "score_parity_max_abs_error": 0.0,
+    "top_features": [
+      "origin_debit_discrepancy",
+      "newbalanceOrig",
+      "destination_is_merchant",
+      "oldbalanceDest",
+      "amount_to_origin_balance"
+    ],
+    "local_cases": 8,
+    "production_used": false,
+    "limitations": [
+      "Sample uniform; few positive examples make permutation AP variable.",
+      "Correlated original/derived features complicate permutation and PDP/ICE; perturbations may be unrealistic.",
+      "SHAP contributions add in raw log-odds, not probability; scores are not calibrated.",
+      "No protected demographic attributes: no demographic fairness claim. Explanations are not causal."
+    ]
+  },
+  "monitoring": {
+    "model_sha256": "861c70da70553195a55ba6f4e044b261b39767cc07dd1d0fd1142c62f066d1db",
+    "policy_sha256": "2f932e6701a196c5225c53ae5ba8109997229afc976c31b4d078e6874c93dcbf",
+    "threshold": 0.9741922616958618,
+    "rows": 575590,
+    "frauds": 3736,
+    "steps": [
+      401,
+      743
+    ],
+    "metrics": {
+      "average_precision": 0.9996684637668988,
+      "roc_auc": 0.999997302062148,
+      "precision": 0.9981192907039226,
+      "recall": 0.9943790149892934,
+      "f1": 0.9962456422633413,
+      "f2": 0.9951248258866388,
+      "alert_rate": 0.006466408380965618,
+      "prevalence": 0.006490731249674247,
+      "tn": 571847,
+      "fp": 7,
+      "fn": 21,
+      "tp": 3715
+    },
+    "reference_rows": 50000,
+    "reference_frauds": 24,
+    "reference_steps": [
+      301,
+      400
+    ],
+    "inference_seconds": 0.7547568001318723,
+    "inference_ms_per_1000_rows": 1.3112750397537698,
+    "windows": 7,
+    "windows_with_drift": 1,
+    "performance_alert_windows": 0,
+    "observed_adwin_signals": 0,
+    "stress_detection_delay_rows": 76,
+    "production_predictions_sha256": "661b8efa85c8c2d74fa7ab493b54b7e6ee6f6c0c9432c4d6ff4cce2f4308a3df",
+    "retraining_performed": false,
+    "deployment": "historical local replay; no live deployment",
+    "evidently_sample_rows": 50000,
+    "evidently_default_tests_separate_from_custom_alert_policy": true,
+    "run_id": "5eca3ced686a496493faf557584cfecd"
+  },
+  "windows": [
+    {
+      "window": 0,
+      "step_min": 401,
+      "step_max": 450,
+      "rows": 227687,
+      "frauds": 580,
+      "average_precision": 0.9995758397020396,
+      "roc_auc": 0.9999989902982082,
+      "precision": 0.9965337954939342,
+      "recall": 0.9913793103448276,
+      "f1": 0.9939498703543648,
+      "f2": 0.9924059371763894,
+      "alert_rate": 0.0025341806954283,
+      "prevalence": 0.0025473566782468,
+      "tn": 227105,
+      "fp": 2,
+      "fn": 5,
+      "tp": 575,
+      "drifting_columns": 0,
+      "performance_alert": false
+    },
+    {
+      "window": 1,
+      "step_min": 451,
+      "step_max": 500,
+      "rows": 47090,
+      "frauds": 504,
+      "average_precision": 1.0,
+      "roc_auc": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "f2": 1.0,
+      "alert_rate": 0.0107029093225737,
+      "prevalence": 0.0107029093225737,
+      "tn": 46586,
+      "fp": 0,
+      "fn": 0,
+      "tp": 504,
+      "drifting_columns": 0,
+      "performance_alert": false
+    },
+    {
+      "window": 2,
+      "step_min": 501,
+      "step_max": 550,
+      "rows": 104212,
+      "frauds": 504,
+      "average_precision": 0.9999684667570884,
+      "roc_auc": 0.9999998469451162,
+      "precision": 0.998015873015873,
+      "recall": 0.998015873015873,
+      "f1": 0.998015873015873,
+      "f2": 0.998015873015873,
+      "alert_rate": 0.0048362952443096,
+      "prevalence": 0.0048362952443096,
+      "tn": 103707,
+      "fp": 1,
+      "fn": 1,
+      "tp": 503,
+      "drifting_columns": 0,
+      "performance_alert": false
+    },
+    {
+      "window": 3,
+      "step_min": 551,
+      "step_max": 600,
+      "rows": 93028,
+      "frauds": 548,
+      "average_precision": 0.9991781116038172,
+      "roc_auc": 0.9999935772264036,
+      "precision": 0.9945155393053016,
+      "recall": 0.9927007299270072,
+      "f1": 0.993607305936073,
+      "f2": 0.9930631617378606,
+      "alert_rate": 0.0058799501225437,
+      "prevalence": 0.0058906995743217,
+      "tn": 92477,
+      "fp": 3,
+      "fn": 4,
+      "tp": 544,
+      "drifting_columns": 0,
+      "performance_alert": false
+    },
+    {
+      "window": 4,
+      "step_min": 601,
+      "step_max": 650,
+      "rows": 22742,
+      "frauds": 578,
+      "average_precision": 0.9998178838098708,
+      "roc_auc": 0.9999946919753282,
+      "precision": 1.0,
+      "recall": 0.9930795847750864,
+      "f1": 0.9965277777777778,
+      "f2": 0.9944559944559944,
+      "alert_rate": 0.0252396447102277,
+      "prevalence": 0.025415530736083,
+      "tn": 22164,
+      "fp": 0,
+      "fn": 4,
+      "tp": 574,
+      "drifting_columns": 0,
+      "performance_alert": false
+    },
+    {
+      "window": 5,
+      "step_min": 651,
+      "step_max": 700,
+      "rows": 69410,
+      "frauds": 532,
+      "average_precision": 0.9998158460704388,
+      "roc_auc": 0.9999987173572888,
+      "precision": 0.9981203007518796,
+      "recall": 0.9981203007518796,
+      "f1": 0.9981203007518796,
+      "f2": 0.9981203007518796,
+      "alert_rate": 0.0076646016424146,
+      "prevalence": 0.0076646016424146,
+      "tn": 68877,
+      "fp": 1,
+      "fn": 1,
+      "tp": 531,
+      "drifting_columns": 0,
+      "performance_alert": false
+    },
+    {
+      "window": 6,
+      "step_min": 701,
+      "step_max": 743,
+      "rows": 11421,
+      "frauds": 490,
+      "average_precision": 1.0,
+      "roc_auc": 1.0,
+      "precision": 1.0,
+      "recall": 0.9877551020408164,
+      "f1": 0.9938398357289528,
+      "f2": 0.9901800327332242,
+      "alert_rate": 0.0423780754750021,
+      "prevalence": 0.0429034235180807,
+      "tn": 10931,
+      "fp": 0,
+      "fn": 6,
+      "tp": 484,
+      "drifting_columns": 7,
+      "performance_alert": false
+    }
+  ],
+  "drift": [
+    {
+      "window": 0,
+      "feature": "type",
+      "psi": 0.0027662432601671,
+      "ks_statistic": null,
+      "ks_pvalue": null,
+      "drift_alert": false,
+      "ks_bh_reject": null
+    },
+    {
+      "window": 0,
+      "feature": "amount",
+      "psi": 0.0210212450929438,
+      "ks_statistic": 0.0477622783909489,
+      "ks_pvalue": 1.0295794332213039e-81,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 0,
+      "feature": "oldbalanceOrg",
+      "psi": 0.0009824248507607,
+      "ks_statistic": 0.0123760678475275,
+      "ks_pvalue": 6.967578072049139e-06,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 0,
+      "feature": "newbalanceOrig",
+      "psi": 0.0061113046592308,
+      "ks_statistic": 0.0242724294316321,
+      "ks_pvalue": 2.0510498403252765e-21,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 0,
+      "feature": "oldbalanceDest",
+      "psi": 0.0011040807255795,
+      "ks_statistic": 0.018951667157106,
+      "ks_pvalue": 3.1979014766627295e-13,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 0,
+      "feature": "newbalanceDest",
+      "psi": 0.0032958260806845,
+      "ks_statistic": 0.0270862293411568,
+      "ks_pvalue": 1.4575856158051054e-26,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 0,
+      "feature": "origin_balance_change",
+      "psi": 0.0071253781414309,
+      "ks_statistic": 0.017739983925301,
+      "ks_pvalue": 1.226300818426022e-11,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 0,
+      "feature": "destination_balance_change",
+      "psi": 0.0125559573743748,
+      "ks_statistic": 0.0385337255969817,
+      "ks_pvalue": 2.4999827790599553e-53,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 0,
+      "feature": "amount_to_origin_balance",
+      "psi": 0.0069921061427113,
+      "ks_statistic": 0.0438342551786486,
+      "ks_pvalue": 9.755486324344452e-46,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 0,
+      "feature": "origin_zero_balance",
+      "psi": 0.0007087883341853,
+      "ks_statistic": 0.0123443797845286,
+      "ks_pvalue": 7.429973274440468e-06,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 0,
+      "feature": "destination_is_merchant",
+      "psi": 0.0026522446621843,
+      "ks_statistic": 0.0243341531137044,
+      "ks_pvalue": 1.603599516625094e-21,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 0,
+      "feature": "origin_debit_discrepancy",
+      "psi": 0.0149218747365601,
+      "ks_statistic": 0.0460619818434957,
+      "ks_pvalue": 5.0054979510835873e-76,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 0,
+      "feature": "destination_credit_discrepancy",
+      "psi": 0.0132458417065807,
+      "ks_statistic": 0.0272886682155766,
+      "ks_pvalue": 5.908447138790755e-27,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 0,
+      "feature": "score",
+      "psi": 0.007290883378613,
+      "ks_statistic": 0.0322306901216506,
+      "ks_pvalue": 1.9567731755831746e-37,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 1,
+      "feature": "type",
+      "psi": 0.0087266043951989,
+      "ks_statistic": null,
+      "ks_pvalue": null,
+      "drift_alert": false,
+      "ks_bh_reject": null
+    },
+    {
+      "window": 1,
+      "feature": "amount",
+      "psi": 0.0211254573295939,
+      "ks_statistic": 0.053297354002973,
+      "ks_pvalue": 2.590070009362624e-60,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 1,
+      "feature": "oldbalanceOrg",
+      "psi": 0.008270864866932,
+      "ks_statistic": 0.0477426884688893,
+      "ks_pvalue": 1.7799771449368806e-48,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 1,
+      "feature": "newbalanceOrig",
+      "psi": 0.0053318548929295,
+      "ks_statistic": 0.0330153408366957,
+      "ks_pvalue": 2.1179749017045448e-23,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 1,
+      "feature": "oldbalanceDest",
+      "psi": 0.0030968856933744,
+      "ks_statistic": 0.0300670758122743,
+      "ks_pvalue": 1.7622398533728631e-19,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 1,
+      "feature": "newbalanceDest",
+      "psi": 0.0041649183117127,
+      "ks_statistic": 0.0317456657464428,
+      "ks_pvalue": 1.1457503972454209e-21,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 1,
+      "feature": "origin_balance_change",
+      "psi": 0.0150801757966048,
+      "ks_statistic": 0.0394457506901678,
+      "ks_pvalue": 3.187374758456166e-33,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 1,
+      "feature": "destination_balance_change",
+      "psi": 0.0048111496453891,
+      "ks_statistic": 0.0324731620301549,
+      "ks_pvalue": 1.1867018995271721e-22,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 1,
+      "feature": "amount_to_origin_balance",
+      "psi": 0.0147342883238704,
+      "ks_statistic": 0.025781297849434,
+      "ks_pvalue": 5.306055227296438e-10,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 1,
+      "feature": "origin_zero_balance",
+      "psi": 0.0105430647657263,
+      "ks_statistic": 0.0477263962624759,
+      "ks_pvalue": 1.9196202193811937e-48,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 1,
+      "feature": "destination_is_merchant",
+      "psi": 0.001741545064826,
+      "ks_statistic": 0.0197741006583139,
+      "ks_pvalue": 1.1435721988762424e-08,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 1,
+      "feature": "origin_debit_discrepancy",
+      "psi": 0.014341475585009,
+      "ks_statistic": 0.0542690465066894,
+      "ks_pvalue": 1.6164282469556711e-62,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 1,
+      "feature": "destination_credit_discrepancy",
+      "psi": 0.0238730076098408,
+      "ks_statistic": 0.0292322658738585,
+      "ks_pvalue": 1.9474132867809134e-18,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 1,
+      "feature": "score",
+      "psi": 0.0097109438906063,
+      "ks_statistic": 0.0353069901466369,
+      "ks_pvalue": 1.0605747995606564e-26,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 2,
+      "feature": "type",
+      "psi": 0.0074312661294918,
+      "ks_statistic": null,
+      "ks_pvalue": null,
+      "drift_alert": false,
+      "ks_bh_reject": null
+    },
+    {
+      "window": 2,
+      "feature": "amount",
+      "psi": 0.018751339064132,
+      "ks_statistic": 0.0505239611561048,
+      "ks_pvalue": 2.121428298519434e-75,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 2,
+      "feature": "oldbalanceOrg",
+      "psi": 0.0057963536947554,
+      "ks_statistic": 0.0390463839097224,
+      "ks_pvalue": 3.381767018725147e-45,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 2,
+      "feature": "newbalanceOrig",
+      "psi": 0.0066435723319371,
+      "ks_statistic": 0.0358386911296203,
+      "ks_pvalue": 3.839257635582998e-38,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 2,
+      "feature": "oldbalanceDest",
+      "psi": 0.0022889968802947,
+      "ks_statistic": 0.0283767612175181,
+      "ks_pvalue": 4.528249456564307e-24,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 2,
+      "feature": "newbalanceDest",
+      "psi": 0.004086446062482,
+      "ks_statistic": 0.0308547199938586,
+      "ks_pvalue": 2.217930533640783e-28,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 2,
+      "feature": "origin_balance_change",
+      "psi": 0.0113731476851448,
+      "ks_statistic": 0.0328315618162976,
+      "ks_pvalue": 4.454414585138912e-32,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 2,
+      "feature": "destination_balance_change",
+      "psi": 0.0087814769795681,
+      "ks_statistic": 0.037454194142709,
+      "ks_pvalue": 1.2784654101898699e-41,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 2,
+      "feature": "amount_to_origin_balance",
+      "psi": 0.0111877193235609,
+      "ks_statistic": 0.0350796114032277,
+      "ks_pvalue": 1.055151270130266e-24,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 2,
+      "feature": "origin_zero_balance",
+      "psi": 0.0070096857571995,
+      "ks_statistic": 0.0390431505009019,
+      "ks_pvalue": 3.440012532556748e-45,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 2,
+      "feature": "destination_is_merchant",
+      "psi": 0.003625915091407,
+      "ks_statistic": 0.0285892634245576,
+      "ks_pvalue": 1.9973968353530563e-24,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 2,
+      "feature": "origin_debit_discrepancy",
+      "psi": 0.0126057172063766,
+      "ks_statistic": 0.0502217794495836,
+      "ks_pvalue": 1.6641756868512421e-74,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 2,
+      "feature": "destination_credit_discrepancy",
+      "psi": 0.0157487341854296,
+      "ks_statistic": 0.0331440049130618,
+      "ks_pvalue": 1.1051658509359788e-32,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 2,
+      "feature": "score",
+      "psi": 0.0112743555361827,
+      "ks_statistic": 0.0417381525039672,
+      "ks_pvalue": 0.0,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 3,
+      "feature": "type",
+      "psi": 0.0048501208981779,
+      "ks_statistic": null,
+      "ks_pvalue": null,
+      "drift_alert": false,
+      "ks_bh_reject": null
+    },
+    {
+      "window": 3,
+      "feature": "amount",
+      "psi": 0.0459929642471054,
+      "ks_statistic": 0.0790569222169669,
+      "ks_pvalue": 3.070666109848103e-177,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 3,
+      "feature": "oldbalanceOrg",
+      "psi": 0.0104159179778903,
+      "ks_statistic": 0.0517497252440125,
+      "ks_pvalue": 3.926610138869948e-76,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 3,
+      "feature": "newbalanceOrig",
+      "psi": 0.0105273425319308,
+      "ks_statistic": 0.0464315251322182,
+      "ks_pvalue": 2.29422191597455e-61,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 3,
+      "feature": "oldbalanceDest",
+      "psi": 0.0032173691581194,
+      "ks_statistic": 0.0274033529689984,
+      "ks_pvalue": 1.1953716338011605e-21,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 3,
+      "feature": "newbalanceDest",
+      "psi": 0.0054237535125379,
+      "ks_statistic": 0.0343738220750741,
+      "ks_pvalue": 8.064304961285854e-34,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 3,
+      "feature": "origin_balance_change",
+      "psi": 0.0235504826537787,
+      "ks_statistic": 0.044628409511115,
+      "ks_pvalue": 1.0078389775098296e-56,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 3,
+      "feature": "destination_balance_change",
+      "psi": 0.0089771999821437,
+      "ks_statistic": 0.0333378578492495,
+      "ks_pvalue": 7.750502847679427e-32,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 3,
+      "feature": "amount_to_origin_balance",
+      "psi": 0.0174695548852301,
+      "ks_statistic": 0.0315192429290014,
+      "ks_pvalue": 1.9734819684971306e-19,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 3,
+      "feature": "origin_zero_balance",
+      "psi": 0.0124355154879481,
+      "ks_statistic": 0.0517234725029022,
+      "ks_pvalue": 4.68650517874483e-76,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 3,
+      "feature": "destination_is_merchant",
+      "psi": 0.0017182541972706,
+      "ks_statistic": 0.0196093872812487,
+      "ks_pvalue": 2.7076127444241647e-11,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 3,
+      "feature": "origin_debit_discrepancy",
+      "psi": 0.0254335255974648,
+      "ks_statistic": 0.068622677903427,
+      "ks_pvalue": 1.3290500584983136e-133,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 3,
+      "feature": "destination_credit_discrepancy",
+      "psi": 0.0525091283028514,
+      "ks_statistic": 0.0515057032291353,
+      "ks_pvalue": 2.0261267232875306e-75,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 3,
+      "feature": "score",
+      "psi": 0.0157894626876107,
+      "ks_statistic": 0.0394405424594879,
+      "ks_pvalue": 2.1019476964872256e-44,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 4,
+      "feature": "type",
+      "psi": 0.0090669434485194,
+      "ks_statistic": null,
+      "ks_pvalue": null,
+      "drift_alert": false,
+      "ks_bh_reject": null
+    },
+    {
+      "window": 4,
+      "feature": "amount",
+      "psi": 0.0327598543631705,
+      "ks_statistic": 0.0656135977486588,
+      "ks_pvalue": 5.92209557421632e-59,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 4,
+      "feature": "oldbalanceOrg",
+      "psi": 0.0269393018676743,
+      "ks_statistic": 0.080616339811802,
+      "ks_pvalue": 8.111176674158265e-89,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 4,
+      "feature": "newbalanceOrig",
+      "psi": 0.0211910298961358,
+      "ks_statistic": 0.0680716823498374,
+      "ks_pvalue": 2.000497993632161e-63,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 4,
+      "feature": "oldbalanceDest",
+      "psi": 0.004973395335584,
+      "ks_statistic": 0.0364720200510069,
+      "ks_pvalue": 1.6753345150054945e-18,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 4,
+      "feature": "newbalanceDest",
+      "psi": 0.0115766070297121,
+      "ks_statistic": 0.052989708908627,
+      "ks_pvalue": 1.371546056701569e-38,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 4,
+      "feature": "origin_balance_change",
+      "psi": 0.0345679392071645,
+      "ks_statistic": 0.0594147462844077,
+      "ks_pvalue": 2.068830958658248e-48,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 4,
+      "feature": "destination_balance_change",
+      "psi": 0.0171893969712922,
+      "ks_statistic": 0.0523926338932371,
+      "ks_pvalue": 9.834629529034852e-38,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 4,
+      "feature": "amount_to_origin_balance",
+      "psi": 0.0531319664003982,
+      "ks_statistic": 0.0707839753399819,
+      "ks_pvalue": 5.306492762602395e-49,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 4,
+      "feature": "origin_zero_balance",
+      "psi": 0.0310959105425018,
+      "ks_statistic": 0.0806163398118019,
+      "ks_pvalue": 8.111176674160542e-89,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 4,
+      "feature": "destination_is_merchant",
+      "psi": 0.0010157380540851,
+      "ks_statistic": 0.0149320692990942,
+      "ks_pvalue": 0.0018586865432291,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 4,
+      "feature": "origin_debit_discrepancy",
+      "psi": 0.0366868482694283,
+      "ks_statistic": 0.081258054700554,
+      "ks_pvalue": 3.121524887405596e-90,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 4,
+      "feature": "destination_credit_discrepancy",
+      "psi": 0.037946650356061,
+      "ks_statistic": 0.0447112056987072,
+      "ks_pvalue": 1.3588020956326014e-27,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 4,
+      "feature": "score",
+      "psi": 0.0222755523549076,
+      "ks_statistic": 0.0515768229961395,
+      "ks_pvalue": 1.3996656040918597e-36,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 5,
+      "feature": "type",
+      "psi": 0.0065432197045698,
+      "ks_statistic": null,
+      "ks_pvalue": null,
+      "drift_alert": false,
+      "ks_bh_reject": null
+    },
+    {
+      "window": 5,
+      "feature": "amount",
+      "psi": 0.0167793644508509,
+      "ks_statistic": 0.0487073908658694,
+      "ks_pvalue": 2.3176948334951595e-60,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 5,
+      "feature": "oldbalanceOrg",
+      "psi": 0.0106407456116213,
+      "ks_statistic": 0.0526172597608414,
+      "ks_pvalue": 2.24629386083918e-70,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 5,
+      "feature": "newbalanceOrig",
+      "psi": 0.0079543647819611,
+      "ks_statistic": 0.041780397637228,
+      "ks_pvalue": 1.6033095167627458e-44,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 5,
+      "feature": "oldbalanceDest",
+      "psi": 0.0021526739824575,
+      "ks_statistic": 0.0232508399366084,
+      "ks_pvalue": 4.420319993606803e-14,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 5,
+      "feature": "newbalanceDest",
+      "psi": 0.003211269479104,
+      "ks_statistic": 0.0266978446909667,
+      "ks_pvalue": 1.9806954616955388e-18,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 5,
+      "feature": "origin_balance_change",
+      "psi": 0.0157652995372701,
+      "ks_statistic": 0.0385346030831292,
+      "ks_pvalue": 6.188287043609517e-38,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 5,
+      "feature": "destination_balance_change",
+      "psi": 0.0040178483029302,
+      "ks_statistic": 0.0272366056764153,
+      "ks_pvalue": 3.6549039643383813e-19,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 5,
+      "feature": "amount_to_origin_balance",
+      "psi": 0.0161779506157431,
+      "ks_statistic": 0.0220485083628139,
+      "ks_pvalue": 8.726255383947958e-09,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 5,
+      "feature": "origin_zero_balance",
+      "psi": 0.0128752097051561,
+      "ks_statistic": 0.0526172597608413,
+      "ks_pvalue": 2.246293860840708e-70,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 5,
+      "feature": "destination_is_merchant",
+      "psi": 0.0004188200306739,
+      "ks_statistic": 0.0096423800605101,
+      "ks_pvalue": 0.0089345360880801,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 5,
+      "feature": "origin_debit_discrepancy",
+      "psi": 0.01241310969378,
+      "ks_statistic": 0.046075698026221,
+      "ks_pvalue": 4.667703810813541e-54,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 5,
+      "feature": "destination_credit_discrepancy",
+      "psi": 0.0231157983158276,
+      "ks_statistic": 0.0255856101426307,
+      "ks_pvalue": 5.828939557493094e-17,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 5,
+      "feature": "score",
+      "psi": 0.0116229422276447,
+      "ks_statistic": 0.0391510128974914,
+      "ks_pvalue": 3.816968861005083e-39,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 6,
+      "feature": "type",
+      "psi": 0.0024291137913754,
+      "ks_statistic": null,
+      "ks_pvalue": null,
+      "drift_alert": false,
+      "ks_bh_reject": null
+    },
+    {
+      "window": 6,
+      "feature": "amount",
+      "psi": 0.0078449184203007,
+      "ks_statistic": 0.0260300464057437,
+      "ks_pvalue": 6.626601758532923e-06,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 6,
+      "feature": "oldbalanceOrg",
+      "psi": 0.3408764035160693,
+      "ks_statistic": 0.2672890640049032,
+      "ks_pvalue": 0.0,
+      "drift_alert": true,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 6,
+      "feature": "newbalanceOrig",
+      "psi": 0.1204224148439559,
+      "ks_statistic": 0.075876842658261,
+      "ks_pvalue": 5.35486454535299e-47,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 6,
+      "feature": "oldbalanceDest",
+      "psi": 0.0645074068390992,
+      "ks_statistic": 0.1227849662901672,
+      "ks_pvalue": 1.2973832732849207e-122,
+      "drift_alert": true,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 6,
+      "feature": "newbalanceDest",
+      "psi": 0.0483035930928169,
+      "ks_statistic": 0.0970040574380527,
+      "ks_pvalue": 1.3440151238804071e-76,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 6,
+      "feature": "origin_balance_change",
+      "psi": 0.3356581076331881,
+      "ks_statistic": 0.2727413606514317,
+      "ks_pvalue": 0.0,
+      "drift_alert": true,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 6,
+      "feature": "destination_balance_change",
+      "psi": 0.0149076360248873,
+      "ks_statistic": 0.0294775308641975,
+      "ks_pvalue": 1.881487773947381e-07,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 6,
+      "feature": "amount_to_origin_balance",
+      "psi": 0.6048502887948506,
+      "ks_statistic": 0.1383747107207169,
+      "ks_pvalue": 2.5571065429449767e-134,
+      "drift_alert": true,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 6,
+      "feature": "origin_zero_balance",
+      "psi": 0.501928962490851,
+      "ks_statistic": 0.2672890640049031,
+      "ks_pvalue": 0.0,
+      "drift_alert": true,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 6,
+      "feature": "destination_is_merchant",
+      "psi": 0.0005462518420726,
+      "ks_statistic": 0.0099150197005515,
+      "ks_pvalue": 0.3180746406161125,
+      "drift_alert": false,
+      "ks_bh_reject": false
+    },
+    {
+      "window": 6,
+      "feature": "origin_debit_discrepancy",
+      "psi": 0.091705322765813,
+      "ks_statistic": 0.1263531354522371,
+      "ks_pvalue": 7.645445360169871e-130,
+      "drift_alert": true,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 6,
+      "feature": "destination_credit_discrepancy",
+      "psi": 0.0382733621276375,
+      "ks_statistic": 0.0364867892478766,
+      "ks_pvalue": 3.443830201915349e-11,
+      "drift_alert": false,
+      "ks_bh_reject": true
+    },
+    {
+      "window": 6,
+      "feature": "score",
+      "psi": 0.1338089413812269,
+      "ks_statistic": 0.1185962110757827,
+      "ks_pvalue": 0.0,
+      "drift_alert": true,
+      "ks_bh_reject": true
+    }
+  ],
+  "quality": [
+    {
+      "window": 0,
+      "feature": "type",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": null
+    },
+    {
+      "window": 0,
+      "feature": "amount",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 8.783988545678936e-06
+    },
+    {
+      "window": 0,
+      "feature": "oldbalanceOrg",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.3280556202154712
+    },
+    {
+      "window": 0,
+      "feature": "newbalanceOrig",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.561898571284263
+    },
+    {
+      "window": 0,
+      "feature": "oldbalanceDest",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.4400778261385147
+    },
+    {
+      "window": 0,
+      "feature": "newbalanceDest",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.3952487405956422
+    },
+    {
+      "window": 0,
+      "feature": "origin_balance_change",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.3261363187182404
+    },
+    {
+      "window": 0,
+      "feature": "destination_balance_change",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.3801710242569843
+    },
+    {
+      "window": 0,
+      "feature": "amount_to_origin_balance",
+      "missing_rate": 0.3280556202154712,
+      "reference_missing_rate": 0.3404,
+      "zero_rate": 0.0
+    },
+    {
+      "window": 0,
+      "feature": "origin_zero_balance",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.6719443797845288
+    },
+    {
+      "window": 0,
+      "feature": "destination_is_merchant",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.6450258468862956
+    },
+    {
+      "window": 0,
+      "feature": "origin_debit_discrepancy",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0774176830473413
+    },
+    {
+      "window": 0,
+      "feature": "destination_credit_discrepancy",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.1217636492202014
+    },
+    {
+      "window": 0,
+      "feature": "score",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0
+    },
+    {
+      "window": 1,
+      "feature": "type",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": null
+    },
+    {
+      "window": 1,
+      "feature": "amount",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0
+    },
+    {
+      "window": 1,
+      "feature": "oldbalanceOrg",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.2926736037375239
+    },
+    {
+      "window": 1,
+      "feature": "newbalanceOrig",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.5530898279889573
+    },
+    {
+      "window": 1,
+      "feature": "oldbalanceDest",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.4504141006583139
+    },
+    {
+      "window": 1,
+      "feature": "newbalanceDest",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.4004034826927161
+    },
+    {
+      "window": 1,
+      "feature": "origin_balance_change",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.2906986621363346
+    },
+    {
+      "window": 1,
+      "feature": "destination_balance_change",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.3840942875345083
+    },
+    {
+      "window": 1,
+      "feature": "amount_to_origin_balance",
+      "missing_rate": 0.2926736037375239,
+      "reference_missing_rate": 0.3404,
+      "zero_rate": 0.0
+    },
+    {
+      "window": 1,
+      "feature": "origin_zero_balance",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.7073263962624761
+    },
+    {
+      "window": 1,
+      "feature": "destination_is_merchant",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.6495858993416861
+    },
+    {
+      "window": 1,
+      "feature": "origin_debit_discrepancy",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0830324909747292
+    },
+    {
+      "window": 1,
+      "feature": "destination_credit_discrepancy",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.132278615417286
+    },
+    {
+      "window": 1,
+      "feature": "score",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0
+    },
+    {
+      "window": 2,
+      "feature": "type",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": null
+    },
+    {
+      "window": 2,
+      "feature": "amount",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0
+    },
+    {
+      "window": 2,
+      "feature": "oldbalanceOrg",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.3013568494990979
+    },
+    {
+      "window": 2,
+      "feature": "newbalanceOrig",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.5502821172225847
+    },
+    {
+      "window": 2,
+      "feature": "oldbalanceDest",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.4497082869535178
+    },
+    {
+      "window": 2,
+      "feature": "newbalanceDest",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.4027751122711396
+    },
+    {
+      "window": 2,
+      "feature": "origin_balance_change",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.2995336429585844
+    },
+    {
+      "window": 2,
+      "feature": "destination_balance_change",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.387796031167236
+    },
+    {
+      "window": 2,
+      "feature": "amount_to_origin_balance",
+      "missing_rate": 0.3013568494990979,
+      "reference_missing_rate": 0.3404,
+      "zero_rate": 0.0
+    },
+    {
+      "window": 2,
+      "feature": "origin_zero_balance",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.698643150500902
+    },
+    {
+      "window": 2,
+      "feature": "destination_is_merchant",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.6407707365754424
+    },
+    {
+      "window": 2,
+      "feature": "origin_debit_discrepancy",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0801539170153149
+    },
+    {
+      "window": 2,
+      "feature": "destination_credit_discrepancy",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.1242851111196407
+    },
+    {
+      "window": 2,
+      "feature": "score",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0
+    },
+    {
+      "window": 3,
+      "feature": "type",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": null
+    },
+    {
+      "window": 3,
+      "feature": "amount",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 2.1498903555918647e-05
+    },
+    {
+      "window": 3,
+      "feature": "oldbalanceOrg",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.2886765274970976
+    },
+    {
+      "window": 3,
+      "feature": "newbalanceOrig",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.5396654770606699
+    },
+    {
+      "window": 3,
+      "feature": "oldbalanceDest",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.4480586490089005
+    },
+    {
+      "window": 3,
+      "feature": "newbalanceDest",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.3979339553682762
+    },
+    {
+      "window": 3,
+      "feature": "origin_balance_change",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.2866018833039515
+    },
+    {
+      "window": 3,
+      "feature": "destination_balance_change",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.3810465666251021
+    },
+    {
+      "window": 3,
+      "feature": "amount_to_origin_balance",
+      "missing_rate": 0.2886765274970976,
+      "reference_missing_rate": 0.3404,
+      "zero_rate": 0.0
+    },
+    {
+      "window": 3,
+      "feature": "origin_zero_balance",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.7113234725029024
+    },
+    {
+      "window": 3,
+      "feature": "destination_is_merchant",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.6497506127187513
+    },
+    {
+      "window": 3,
+      "feature": "origin_debit_discrepancy",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0799221739691275
+    },
+    {
+      "window": 3,
+      "feature": "destination_credit_discrepancy",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.1305843401986498
+    },
+    {
+      "window": 3,
+      "feature": "score",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0
+    },
+    {
+      "window": 4,
+      "feature": "type",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": null
+    },
+    {
+      "window": 4,
+      "feature": "amount",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0001319145193914
+    },
+    {
+      "window": 4,
+      "feature": "oldbalanceOrg",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.259783660188198
+    },
+    {
+      "window": 4,
+      "feature": "newbalanceOrig",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.5180283176501627
+    },
+    {
+      "window": 4,
+      "feature": "oldbalanceDest",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.4566880661331457
+    },
+    {
+      "window": 4,
+      "feature": "newbalanceDest",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.4005804238853223
+    },
+    {
+      "window": 4,
+      "feature": "origin_balance_change",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.2577169993843989
+    },
+    {
+      "window": 4,
+      "feature": "destination_balance_change",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.3861577697651921
+    },
+    {
+      "window": 4,
+      "feature": "amount_to_origin_balance",
+      "missing_rate": 0.259783660188198,
+      "reference_missing_rate": 0.3404,
+      "zero_rate": 0.0
+    },
+    {
+      "window": 4,
+      "feature": "origin_zero_balance",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.7402163398118019
+    },
+    {
+      "window": 4,
+      "feature": "destination_is_merchant",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.6544279307009058
+    },
+    {
+      "window": 4,
+      "feature": "origin_debit_discrepancy",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0993756046082138
+    },
+    {
+      "window": 4,
+      "feature": "destination_credit_discrepancy",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.1327499780142467
+    },
+    {
+      "window": 4,
+      "feature": "score",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0
+    },
+    {
+      "window": 5,
+      "feature": "type",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": null
+    },
+    {
+      "window": 5,
+      "feature": "amount",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 1.4407145944388417e-05
+    },
+    {
+      "window": 5,
+      "feature": "oldbalanceOrg",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.2877827402391586
+    },
+    {
+      "window": 5,
+      "feature": "newbalanceOrig",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.5443451952168276
+    },
+    {
+      "window": 5,
+      "feature": "oldbalanceDest",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.4421697161792249
+    },
+    {
+      "window": 5,
+      "feature": "newbalanceDest",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.3918023339576429
+    },
+    {
+      "window": 5,
+      "feature": "origin_balance_change",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.2859098112663881
+    },
+    {
+      "window": 5,
+      "feature": "destination_balance_change",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.3731162656677712
+    },
+    {
+      "window": 5,
+      "feature": "amount_to_origin_balance",
+      "missing_rate": 0.2877827402391586,
+      "reference_missing_rate": 0.3404,
+      "zero_rate": 0.0
+    },
+    {
+      "window": 5,
+      "feature": "origin_zero_balance",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.7122172597608414
+    },
+    {
+      "window": 5,
+      "feature": "destination_is_merchant",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.65971761993949
+    },
+    {
+      "window": 5,
+      "feature": "origin_debit_discrepancy",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0801325457426883
+    },
+    {
+      "window": 5,
+      "feature": "destination_credit_discrepancy",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.1341737501800893
+    },
+    {
+      "window": 5,
+      "feature": "score",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0
+    },
+    {
+      "window": 6,
+      "feature": "type",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": null
+    },
+    {
+      "window": 6,
+      "feature": "amount",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.000350232028719
+    },
+    {
+      "window": 6,
+      "feature": "oldbalanceOrg",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0731109359950967
+    },
+    {
+      "window": 6,
+      "feature": "newbalanceOrig",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.5146659662026092
+    },
+    {
+      "window": 6,
+      "feature": "oldbalanceDest",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.5078364416425882
+    },
+    {
+      "window": 6,
+      "feature": "newbalanceDest",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.4167761141756413
+    },
+    {
+      "window": 6,
+      "feature": "origin_balance_change",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0729358199807372
+    },
+    {
+      "window": 6,
+      "feature": "destination_balance_change",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.3873566237632431
+    },
+    {
+      "window": 6,
+      "feature": "amount_to_origin_balance",
+      "missing_rate": 0.0731109359950967,
+      "reference_missing_rate": 0.3404,
+      "zero_rate": 0.0
+    },
+    {
+      "window": 6,
+      "feature": "origin_zero_balance",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.9268890640049032
+    },
+    {
+      "window": 6,
+      "feature": "destination_is_merchant",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.6792750197005516
+    },
+    {
+      "window": 6,
+      "feature": "origin_debit_discrepancy",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.1484983801768671
+    },
+    {
+      "window": 6,
+      "feature": "destination_credit_discrepancy",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.1925400577882847
+    },
+    {
+      "window": 6,
+      "feature": "score",
+      "missing_rate": 0.0,
+      "reference_missing_rate": 0.0,
+      "zero_rate": 0.0
+    }
+  ],
+  "adwin": {
+    "observed_error_changes": [],
+    "controlled_scenario": {
+      "description": "Synthetic ONLY: flip 15% of labels after midpoint, seed42; original data/model unchanged.",
+      "change_position": 287795,
+      "flipped_labels": 43106,
+      "detections": [
+        287871,
+        355775
+      ],
+      "first_detection_delay_rows": 76
+    },
+    "interpretation": "Observed changes in error mean are investigation signals, not proof of conditional concept drift. No alert is not proof of stationarity."
+  },
+  "tracking": {
+    "baseline/remote_tracking.json": {
+      "backend": "dagshub",
+      "experiment_name": "fraud-baseline-temporal",
+      "experiment_id": "1",
+      "run_id": "00303d2bd7304de6868196341eff688d",
+      "source_local_run_id": "fde5ae49c22248ffa6da2c03922729e7",
+      "run_url": "https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/1/runs/00303d2bd7304de6868196341eff688d",
+      "model_uri": "runs:/00303d2bd7304de6868196341eff688d/model",
+      "remote_write_verified": true,
+      "run_status": "FINISHED",
+      "model_artifacts_verified": true,
+      "model_role": "baseline_only",
+      "registry_registration": false,
+      "remote_metrics_verified": true,
+      "finished_child_runs": 6,
+      "downloaded_model_hash_verified": true
+    },
+    "optimization/remote_tracking.json": {
+      "experiment_name": "fraud-hyperparameter-search",
+      "experiment_id": "2",
+      "methods": {
+        "random": {
+          "run_id": "ee7dfc831ece4bafbe337ac26e16f882",
+          "run_url": "https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/2/runs/ee7dfc831ece4bafbe337ac26e16f882"
+        },
+        "tpe": {
+          "run_id": "7373d47b615b4ae2a8e037f8238a6653",
+          "run_url": "https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/2/runs/7373d47b615b4ae2a8e037f8238a6653"
+        }
+      },
+      "trial_runs": {
+        "random_0": {
+          "run_id": "f0c990dcf09c43ffaf68ac8971260842",
+          "verified": true
+        },
+        "random_1": {
+          "run_id": "8dbbd1182724461dbc8ca1c080ea7aa0",
+          "verified": true
+        },
+        "random_2": {
+          "run_id": "1501fd54c8bd457c9027e6c8419fe430",
+          "verified": true
+        },
+        "random_3": {
+          "run_id": "cc4f3dc36c2343c4a86e703c3aedcc02",
+          "verified": true
+        },
+        "random_4": {
+          "run_id": "abcddad8985641cea4e7b009a5e15ebc",
+          "verified": true
+        },
+        "random_5": {
+          "run_id": "a4446591774a40afbbe2e4a08a7272c2",
+          "verified": true
+        },
+        "random_6": {
+          "run_id": "ab861f6c3f374299b3f2cc2badaaf0b0",
+          "verified": true
+        },
+        "random_7": {
+          "run_id": "f53f25bdcfb042bcb5dd3b4be949f03c",
+          "verified": true
+        },
+        "random_8": {
+          "run_id": "8dc113968f604045acbd171c5c5f9659",
+          "verified": true
+        },
+        "random_9": {
+          "run_id": "f97e415edb304d0fa7992fc326f60a6d",
+          "verified": true
+        },
+        "tpe_0": {
+          "run_id": "61239a3bc67f4292850de1d0ca799985",
+          "verified": true
+        },
+        "tpe_1": {
+          "run_id": "4a1901dd1f774d0783581579e9dec92a",
+          "verified": true
+        },
+        "tpe_2": {
+          "run_id": "522b78166d2549799350ecca08c803dd",
+          "verified": true
+        },
+        "tpe_3": {
+          "run_id": "54fce3d0447a4fb09abb2237cad13620",
+          "verified": true
+        },
+        "tpe_4": {
+          "run_id": "291ab72372f240a384491652b097caf8",
+          "verified": true
+        },
+        "tpe_5": {
+          "run_id": "660b1d14155849ac816eb4ff5796b26a",
+          "verified": true
+        },
+        "tpe_6": {
+          "run_id": "3a17264ee82645aa966786c6b3f89b6d",
+          "verified": true
+        },
+        "tpe_7": {
+          "run_id": "0e17758971f247df9f9c28b664e5d8bb",
+          "verified": true
+        },
+        "tpe_8": {
+          "run_id": "d36a1e8b178144c4ba9620be44778471",
+          "verified": true
+        },
+        "tpe_9": {
+          "run_id": "81be3c66675e4da3b0323f31455c70b3",
+          "verified": true
+        }
+      },
+      "remote_write_verified": true,
+      "candidate": {
+        "run_id": "c8303ef974ee4a879e4fa6a9594e8c5a",
+        "verified": true,
+        "run_url": "https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/2/runs/c8303ef974ee4a879e4fa6a9594e8c5a",
+        "model_role": "candidate_before_threshold_and_offline_test",
+        "downloaded_model_hash_verified": true
+      },
+      "verified_trial_count": 20,
+      "parent_metrics_verified": true
+    },
+    "final_remote_tracking.json": {
+      "experiment_id": "3",
+      "runs": {
+        "evaluation": {
+          "run_id": "5cc382370d9f41eda4e300af13eb1ba1",
+          "verified": true,
+          "run_url": "https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/3/runs/5cc382370d9f41eda4e300af13eb1ba1"
+        },
+        "interpretability": {
+          "run_id": "095cbbaffc5f41c9909c437b98808c33",
+          "verified": true,
+          "run_url": "https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/3/runs/095cbbaffc5f41c9909c437b98808c33"
+        },
+        "monitoring": {
+          "run_id": "8718daf1d9734bd68975ea8df3800641",
+          "verified": true,
+          "run_url": "https://dagshub.com/jorgesialer/Proyecto-mle-riesgo.mlflow/#/experiments/3/runs/8718daf1d9734bd68975ea8df3800641"
+        }
+      },
+      "remote_write_verified": true,
+      "model_uri": "runs:/5cc382370d9f41eda4e300af13eb1ba1/model",
+      "model_sha256": "861c70da70553195a55ba6f4e044b261b39767cc07dd1d0fd1142c62f066d1db",
+      "downloaded_model_hash_verified": true,
+      "registry": {
+        "verified": true,
+        "name": "fraud-paysim-posttransaction",
+        "version": "1",
+        "live_deployment": false,
+        "stage": "Production",
+        "status": "READY"
+      },
+      "remote_mlflow_model_prediction_parity_verified": true
+    }
+  }
+}

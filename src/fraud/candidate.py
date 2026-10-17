@@ -22,11 +22,11 @@ from .tracking import configure
 def fit_candidate(root:Path=ROOT):
     import mlflow.sklearn
     from mlflow.models import infer_signature
-    reports=root/'reports/optimization'
+    reports=root/'artifacts/run_reports/optimization'
     result_path=reports/'candidate.json'
     artifacts=root/'artifacts/optimization'
     summary=json.loads((reports/'summary.json').read_text(encoding='utf-8'))
-    profile=json.loads((root/'reports/dataset_profile.json').read_text(encoding='utf-8'))
+    profile=json.loads((root/'artifacts/run_reports/dataset_profile.json').read_text(encoding='utf-8'))
     if result_path.exists():
         previous=json.loads(result_path.read_text(encoding='utf-8'))
         if sha256(artifacts/'pipeline_candidate.joblib')!=previous['model_sha256']:
@@ -52,7 +52,7 @@ def fit_candidate(root:Path=ROOT):
             selection_method=selected['method']
         else:
             pipeline=joblib.load(root/'artifacts/baseline/pipeline_baseline.joblib')
-            params=json.loads((root/'reports/baseline/summary.json').read_text(encoding='utf-8'))['tree_parameters']
+            params=json.loads((root/'artifacts/run_reports/baseline/summary.json').read_text(encoding='utf-8'))['tree_parameters']
             selection_method='baseline_retained'
         elapsed=perf_counter()-start
         model_path=artifacts/'candidate_mlflow_model'

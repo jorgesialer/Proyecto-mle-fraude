@@ -41,7 +41,7 @@ def score_partition(root,name,pipeline,profile,artifacts):
         if any(metadata[k]!=v for k,v in expected.items()) or sha256(cache)!=metadata['predictions_sha256']:
             raise ValueError('La evidencia previa no corresponde a estos datos/modelo')
         return pd.read_parquet(cache),metadata
-    if name=='offline_test' and not (root/'reports/evaluation/decision_policy.json').is_file():
+    if name=='offline_test' and not (root/'artifacts/run_reports/evaluation/decision_policy.json').is_file():
         raise RuntimeError('No abrir test offline antes de congelar la política')
     rows=[];seconds=0.
     for batch in pq.ParquetFile(source).iter_batches(batch_size=100_000):
@@ -64,10 +64,10 @@ def score_partition(root,name,pipeline,profile,artifacts):
 def evaluate(root:Path=ROOT):
     import mlflow.sklearn
     from mlflow.models import infer_signature
-    reports=root/'reports/evaluation';reports.mkdir(parents=True,exist_ok=True)
+    reports=root/'artifacts/run_reports/evaluation';reports.mkdir(parents=True,exist_ok=True)
     artifacts=root/'artifacts/evaluation';artifacts.mkdir(parents=True,exist_ok=True)
-    candidate=json.loads((root/'reports/optimization/candidate.json').read_text(encoding='utf-8'))
-    profile=json.loads((root/'reports/dataset_profile.json').read_text(encoding='utf-8'))
+    candidate=json.loads((root/'artifacts/run_reports/optimization/candidate.json').read_text(encoding='utf-8'))
+    profile=json.loads((root/'artifacts/run_reports/dataset_profile.json').read_text(encoding='utf-8'))
     path=root/'artifacts/optimization/pipeline_candidate.joblib'
     if sha256(path)!=candidate['model_sha256'] or candidate['fit_step_max']!=250:
         raise ValueError('Candidato distinto del seleccionado')
