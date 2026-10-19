@@ -4,9 +4,9 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 REPORTS=ROOT/'reports'
-st.set_page_config(page_title='Fraude · monitoreo',page_icon='📊',layout='wide')
+st.set_page_config(page_title='Fraude · Monitoreo',layout='wide')
 st.title('Detección de fraude · monitoreo')
 st.caption('PaySim · simulación histórica · modelo y umbral congelados · etiquetas históricas disponibles')
 path=REPORTS/'resultados.json'

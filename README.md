@@ -83,7 +83,7 @@ Las etiquetas ya están disponibles en el dataset, por eso se puede evaluar cada
 Proyecto-mle-fraude/
 ├── README.md           # Documentación y conclusiones
 ├── model-card.md       # Ficha técnica y limitaciones del modelo
-├── app.py              # Panel de monitoreo
+├── App/                # Aplicación de monitoreo
 ├── requirements.txt    # Dependencias
 ├── notebooks/          # Los cuatro notebooks solicitados
 ├── data/               # Muestra CSV y ubicación de datos locales
@@ -111,7 +111,7 @@ git clone https://github.com/jorgesialer/Proyecto-mle-fraude.git
 cd Proyecto-mle-fraude
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m streamlit run app.py
+.\.venv\Scripts\python.exe -m streamlit run App/app.py
 ```
 
 Abre la dirección local que indica Streamlit. Selecciona un periodo y consulta las pestañas de desempeño, drift, explicaciones y reportes. El panel utiliza los resultados incluidos y funciona sin entrenamiento adicional ni credenciales. Para ejecutar el análisis completo, sigue la [guía de reproducción](#ejecuta-el-análisis-completo).
